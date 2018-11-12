@@ -1,0 +1,14 @@
+
+		// ¹®ÀÚ¿­ parsing
+		int i = 0;
+		String []arr = new String[3];
+		StringTokenizer token =new StringTokenizer(n,",");
+			while(token.hasMoreTokens()) {
+			arr[i] = token.nextToken();
+			i++;
+			}
+		
+		String name = arr[0];
+		String age = arr[1];
+		String sex = arr[2];
+		

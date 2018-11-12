@@ -1,0 +1,70 @@
+
+class Car{
+	private int speed;
+	private int mileage;
+	private String color;
+	
+	private int id;
+	
+	private static int numberOfCars =0;
+	
+	public Car(int s, int m, String c) {
+		speed = s;
+		mileage = m;
+		color = c;
+		
+		id = ++numberOfCars;
+	}
+	
+
+	public String toString() {
+		return("speed = "+this.speed+" mileage = "+ this.mileage + " clolr = "+ this.color);
+	}
+	
+	public static int getNumberOfCars() {
+		return numberOfCars;
+	}
+	
+	public void speedup() {
+		System.out.println("default 속도 5 증가.");
+		this.speed = speed+5;
+		System.out.println(toString());
+	}
+	
+	public int speedup(int n) {
+		System.out.println("속도 " + n + "증가.");
+		this.speed = this.speed+n;
+		System.out.println(toString());
+		
+		return this.speed;
+		
+	}
+	
+	public void speeddown() {
+		System.out.println("default 속도 5감소.");
+		this.speed = speed-5;
+		System.out.println(toString());
+	}
+	
+	public int speeddown(int n) {
+		System.out.println("속도 "+n+ "감소.");
+		this.speed = this.speed-n;
+		System.out.println(toString());
+		
+		return this.speed;
+	}
+}
+public class carex {
+
+	public static void main(String args[]) {
+		Car c1 = new Car(100, 0, "blue");
+		Car c2 = new Car(0,0,"white");
+		int n = Car.getNumberOfCars();
+		System.out.println("지금까지 생성된 자동차 수 = " + n);
+		System.out.println(c1.toString());
+		c1.speedup();
+		c1.speedup(9);
+		c1.speeddown();
+		c1.speeddown(2);
+	}
+}
