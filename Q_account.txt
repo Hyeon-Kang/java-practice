@@ -1,0 +1,141 @@
+
+import java.util.Scanner;
+class Account{
+	private String name;
+	private long restMoney;
+	static double interest = 0.7;
+	private int accountNum;
+	static int Count=0;
+	private String pw;
+	private String password;
+	
+	Scanner scan = new Scanner(System.in);
+	
+	public Account() {
+		System.out.println("이름을 입력하세요!");
+	}
+	
+	//계좌 생성
+	public Account(String a, long b, String c) {
+		setData(a, b);
+		this.setPass(c);
+		pw="";
+		accountNum = ++Count;
+	}
+	
+	//setData
+	public void setData(String s, long n) {
+		name = s;
+		restMoney = n;
+		
+	}
+	
+	//setData 상황 1
+	public void setData(String s ,String c) {
+		name = s;
+		restMoney = 0;
+		this.setPass(c);
+	}
+	
+	//setData 상황2
+	public void setData(long n) {
+		System.out.println("이름을 입력하세요!");
+	}
+	
+	//계좌 수 생성
+	public static int getCount() {
+		System.out.println("개설된 계좌 수 : "+Count);
+		return Count;
+	}
+	
+	//패스워드 설정
+	public void setPass(String s) {
+		this.password = s;
+	}
+	
+	
+	
+	
+	//toString 출력
+	public String toString() {
+		return ("이름 : "+ this.name + ", 잔액 : "+ restMoney + ", 계좌 번호 : "+accountNum);
+	}
+	
+	//출금
+	public void Withdraw(long n) {
+		System.out.println("출금을 위한 비밀번호 확인" + password);
+		System.out.print(name+"님의 password 입력 : ");
+		
+		pw = scan.next();
+		System.out.println(pw);
+		
+		if(this.password == pw) {
+			System.out.println("비밀번호 확인.");
+			// 잔액 > 출금액
+			if (restMoney>n)
+			{
+				this.restMoney = this.restMoney - n;
+				System.out.println(name+ "의 계좌에 "+ n +"원 출금.");
+				} 
+			// 잔액 < 출금액
+			else {
+				System.out.println("잔액이 부족합니다!");
+			}
+		}
+		else {System.out.println("비밀번호 불일치.");}
+		
+	}
+	
+	//입금
+	public void Deposit(long n) {
+		System.out.println("입금을 위한 비밀번호 확인" + this.password);
+		System.out.print(name+"님의 password 입력 : ");
+		pw = scan.next();
+		System.out.println();
+		
+		
+		
+		if(this.password == pw) {
+			
+			// 입금액 >= 0
+			if(n>=0) {
+				restMoney = restMoney + n;
+				System.out.println(name+ "의 계좌에 "+ n +"원 입금.");	
+			}
+			
+			// 입금액 < 0
+			else {
+			System.out.println("입금액 오류!");
+			}
+		}// ps if end
+		else {System.out.println("비밀번호 불일치.");}
+	}
+	
+	//이자율 변경
+	public static void InterRate(double n) {
+		System.out.println("이자율 "+interest+"에서 "+ n+"으로 변경");
+		Account.interest = n;
+		
+	}
+}
+
+public class aaaaa {
+
+	public static void main(String []args) {
+		Account a1 = new Account("홍길동", 1000, "kim001");
+		System.out.println(a1);
+		System.out.println();
+		Account a2 = new Account("성춘향", 3000, "sung001");
+		System.out.println(a2.toString());
+		System.out.println();
+		Account.InterRate(0.6);
+		System.out.println();
+		a1.Deposit(500);
+		System.out.println(a1.toString());
+		System.out.println();
+		a2.Withdraw(1000);
+		System.out.println(a2.toString());
+		System.out.println();
+		Account.getCount();
+	}
+}
