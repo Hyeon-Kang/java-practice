@@ -1,0 +1,175 @@
+1.Time 클래스
+
+class Time{
+	private int hour;
+	private int minute;
+	private int second;
+	public Time (int h, int m, int s) {
+		hour = h;
+		minute = m;
+		second = s;
+		
+	}
+	
+	
+	//시:분:초 > 초
+	public int transSecond() {
+		int sec = 0;
+		sec = ((this.hour * 60)+minute)*60 + second;
+		return sec;
+	}
+	
+	//초 > 시:분:초
+	public static Time transTime(int sec) {
+		int h, m, s;
+		m = sec /60;
+		s = sec %60;
+		h = m/60;
+		m = m%60;
+		Time tr = new Time(h,m,s);
+		
+		return tr;
+		
+	}
+	
+	//instance method Add()  현재시간 + 입력시간
+	public Time Add(Time t) {
+		int sec;
+		sec = this.transSecond() +t.transSecond();
+		return Time.transTime(sec);
+	}
+	
+	//static method Add()
+	public static Time Add(Time t1, Time t2) {
+		int sec;
+		sec = t1.transSecond() + t2.transSecond();
+		return Time.transTime(sec);
+	}
+	
+	public String toString() {
+		return ("시: "+this.hour+" 분: "+ this.minute + " 초:"+this.second);
+	}
+}
+
+public class TT {
+
+	public static void main(String args[]) {
+		
+		Time t1 = new Time(10, 20, 10); //10시 20분 10초
+		Time t2 = new Time(3, 45, 55);
+		int sec;
+		System.out.println(t1.toString() + "=>" + t1.transSecond());
+		System.out.println(t2.toString() + "=>" + t2.transSecond());
+		
+		Time t3 = Time.transTime(1000);
+		System.out.print("1000 second =>" + t3.toString());
+		
+		/*시간객체 t1과 t2를 더해서 t3 생성*/
+		System.out.print("t1 + t2");
+		t3 = Time.Add(t1, t2);
+		System.out.println(t3.toString());
+
+	}
+}
+
+
+===============================================================
+
+2. 은행 계좌
+class Account{
+	private String name;
+	private long restMoney;
+	static double interest = 0.7;
+	private int accountNum;
+	static int Count=0;
+	
+	public Account() {
+		System.out.println("이름을 입력하세요!");
+	}
+	
+	//계좌 생성
+	public Account(String a, long b) {
+		setData(a, b);
+		accountNum = ++Count;
+	}
+	
+	//setData
+	public void setData(String s, long n) {
+		name = s;
+		restMoney = n;
+		
+		
+	}
+	//setData 상황 1
+	public void setData(String s) {
+		name = s;
+		restMoney = 0;
+	}
+	
+	//setData 상황2
+	public void setData(long n) {
+		System.out.println("이름을 입력하세요!");
+	}
+	
+	//계좌 수 생성
+	public static int getCount() {
+		System.out.println("개설된 계좌 수 : "+Count);
+		return Count;
+	}
+	
+	//toString 출력
+	public String toString() {
+		return ("이름 : "+ this.name + ", 잔액 : "+ restMoney + ", 계좌 번호 : "+accountNum);
+	}
+	
+	//출금
+	public void Withdraw(long n) {
+		// 잔액 > 출금액
+		if (restMoney>n)
+		{
+			this.restMoney = this.restMoney - n;
+			System.out.println(name+ "의 계좌에 "+ n +"원 출금.");
+			} 
+		// 잔액 < 출금액
+		else {
+			System.out.println("잔액이 부족합니다!");
+		}
+	}
+	
+	//입금
+	public void Deposit(long n) {
+		// 입금액 >= 0
+		if(n>=0) {
+			restMoney = restMoney + n;
+			System.out.println(name+ "의 계좌에 "+ n +"원 입금.");	
+		}
+		// 입금액 < 0
+		else {
+			System.out.println("입금액 오류!");
+		}
+	}
+	
+	//이자율 변경
+	public static void InterRate(double n) {
+		System.out.println("이자율 "+interest+"에서 "+ n+"으로 변경");
+		Account.interest = n;
+		
+	}
+}
+
+public class aaccount {
+
+	public static void main(String []args) {
+		Account a1 = new Account("홍길동", 1000);
+		System.out.println(a1);
+		Account a2 = new Account("성춘향", 3000);
+		System.out.println(a2.toString());
+		Account.InterRate(0.6);
+		a1.Deposit(500);
+		System.out.println(a1.toString());
+		a2.Withdraw(1000);
+		System.out.println(a2.toString());
+
+		Account.getCount();
+	}
+}
