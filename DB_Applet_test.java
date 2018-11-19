@@ -5,127 +5,120 @@ import java.sql.*;
 import java.util.StringTokenizer;
 
 
-
-
 public class AppletTest extends Applet implements ActionListener{
-	Choice search; //°Ë»ö Á¶°Ç ¼±ÅÃ¹Ú½º ¼±¾ğ
-//	Choice option; //±â´É ¼±ÅÃ ¹Ú½º ¼±¾ğ
-	Label label; //¶óº§ ¼±¾ğ
-	TextField textField; //°ªÀ» ÀÔ·Â¹ŞÀ» ÅØ½ºÆ® ÇÊµå ¼±¾ğ
-	TextArea Area; //°á°ú °ªÀ» Ãâ·ÂÇÒ ÅØ½ºÆ® ¿¡¸®¾î ¼±¾ğ
-	Button button; //°Ë»ö¹öÆ° ¼±¾ğ
+	Choice search; //ê²€ìƒ‰ ì¡°ê±´ ì„ íƒë°•ìŠ¤ ì„ ì–¸
+	Label label; //ë¼ë²¨ ì„ ì–¸
+	TextField textField; //ê°’ì„ ì…ë ¥ë°›ì„ í…ìŠ¤íŠ¸ í•„ë“œ ì„ ì–¸
+	TextArea Area; //ê²°ê³¼ ê°’ì„ ì¶œë ¥í•  í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì„ ì–¸
+	Button button; //ê²€ìƒ‰ë²„íŠ¼ ì„ ì–¸
 
 
 private String url = "jdbc:inetdae7://210.115.229.77:2433";
-// ÁÖ¼Ò °ª ÀúÀå º¯¼ö
+// ì£¼ì†Œ ê°’ ì €ì¥ ë³€ìˆ˜
 private String user = "20155204";
-// ID °ª ÀúÀå º¯¼ö
+// ID ê°’ ì €ì¥ ë³€ìˆ˜
 private String pass = "Ecks0407@";
-// PW °ª ÀúÀå º¯¼ö
+// PW ê°’ ì €ì¥ ë³€ìˆ˜
 
 
-//JDBC µå¶óÀÌ¹ö ·Îµù
+//JDBC ë“œë¼ì´ë²„ ë¡œë”©
 public void init() {
 	try{
 		Class.forName("com.inet.tds.TdsDriver");
 	}
 	catch(ClassNotFoundException e) {
 		System.out.println("Class Loading Failed");
-		//·Îµù ½ÇÆĞ½Ã Ãâ·Â ¸Ş½ÃÁö
+		//ë¡œë”© ì‹¤íŒ¨ì‹œ ì¶œë ¥ ë©”ì‹œì§€
 	}
 }
 
-
+//ì¸í„°í˜ì´ìŠ¤ êµ¬ì„±
 public void start() {
-	setLayout(new FlowLayout()); // ·¹ÀÌ¾Æ¿ô ¹èÄ¡ÀÚ
-	label = new Label("ÀÛ¾÷ ¼±ÅÃ"); // ¾È³»¹®±¸
-	add(label); // ¶óº§Ãß°¡
-/*	
-	option = new Choice();
-	option.add("--");
-	option.add("»ğÀÔ");
-	option.add("»èÁ¦");
-	option.add("°»½Å");
-	add(option);
+	setLayout(new FlowLayout()); // ë ˆì´ì•„ì›ƒ ë°°ì¹˜ì
+	label = new Label("ì‘ì—… ì„ íƒ"); // ì•ˆë‚´ë¬¸êµ¬
+	add(label); // ë¼ë²¨ì¶”ê°€
+
 	
-*/	
-	
-	search = new Choice(); //¼±ÅÃ (Ã¼Å©¹Ú½º)
+	search = new Choice(); //ì„ íƒ (ì²´í¬ë°•ìŠ¤)
 	search.add("--");
-	search.add("ÀüÃ¼"); // ÀüÃ¼ ¼Â
-	search.add("ÀÌ¸§"); // ÀÌ¸§ ¼Â
-	search.add("³ªÀÌ"); // ³ªÀÌ ¼Â
-	search.add("¼ºº°"); // ¼ºº° ¼Â
+	search.add("ì „ì²´"); // ì „ì²´ ì…‹
+	search.add("ì´ë¦„"); // ì´ë¦„ ì…‹
+	search.add("ë‚˜ì´"); // ë‚˜ì´ ì…‹
+	search.add("ì„±ë³„"); // ì„±ë³„ ì…‹
 	search.add("--");  					////
-	search.add("»ğÀÔ");
-	search.add("»èÁ¦");
-	search.add("°»½Å");
-	add(search); // ¼±ÅÃ¹Ú½º Ãß°¡
+	search.add("ì‚½ì…");
+	search.add("ì‚­ì œ");
+	search.add("ê°±ì‹ ");
+	add(search); // ì„ íƒë°•ìŠ¤ ì¶”ê°€
 	
 
-	textField = new TextField(10); //ÅØ½ºÆ® ÇÊµå °´Ã¼ »ı¼º(°Ë»ö¾î ÀÔ·Â ¿µ¿ª)
-	add(textField);// ÅØ½ºÆ® ÇÊµå Ãß°¡(°Ë»ö¾î ÀÔ·Â ¿µ¿ª)
-	button = new Button("search");
+	textField = new TextField(10); //í…ìŠ¤íŠ¸ í•„ë“œ ê°ì²´ ìƒì„±(ê²€ìƒ‰ì–´ ì…ë ¥ ì˜ì—­)
+	add(textField);// í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€(ê²€ìƒ‰ì–´ ì…ë ¥ ì˜ì—­)
+	button = new Button("search"); //"search" ë²„íŠ¼ ì¶”ê°€
 	add(button);
-	Area = new TextArea(10,50);
+	Area = new TextArea(10,50); //í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì¶”ê°€
 	add(Area);
-	button.addActionListener(this);
+	button.addActionListener(this); // ë²„íŠ¼ ì•¡ì…˜ ì§€ì •.
 }
 
-//Action event handle (Äõ¸® ¼±ÅÃ)
+//Action event handle (ì¿¼ë¦¬ ì„ íƒ)
 public void actionPerformed(ActionEvent ae) {
 	Connection con = null;
+	//ì»¤ë„¥ì…˜ ê°ì²´ ì´ˆê¸°í™”
 	Statement stmt = null;
+	//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ ê°ì²´ ì´ˆê¸°í™”
 	
 	String st = ae.getActionCommand();
+	//ë¬¸ìì—´ ë³€ìˆ˜ stì—  ActionEvent ì¸ì ë‚´ìš© ì €ì¥.
 	String item = search.getSelectedItem();
+	//ë¬¸ìì—´ ë³€ìˆ˜ itemì— searchì„ íƒë°•ìŠ¤ì˜ ì„ íƒ ì•„ì´í…œ ë¬¸ìì—´ ì €ì¥.
 	
-	
-	
+	//search ë‚´ìš© ì„ íƒ ê°’ì— ë”°ë¥¸ ë¶„ê¸° ë°œìƒ
 	if(st.equals("search")) {
 		String n = textField.getText();
+		//ë¬¸ìì—´ ë³€ìˆ˜ nì— í…ìŠ¤íŠ¸ í•„ë“œì˜ ë‚´ìš© ê°€ì ¸ì˜¤ê¸°
 		
-		//ÀüÃ¼ ¼±ÅÃ
+		//ì „ì²´ ì„ íƒ
 		if(item.equals("--")) {}
 		
-		else if(item.equals("ÀüÃ¼")) //¼±ÅÃ¹Ú½º¿¡¼­ ÀüÃ¼ ¼±ÅÃ
+		else if(item.equals("ì „ì²´")) //ì„ íƒë°•ìŠ¤ì—ì„œ ì „ì²´ ì„ íƒ
 		{
-			TotalgetDBSearch(); //ÀüÃ¼ °Ë»ö ¸Ş¼Òµå È£Ãâ
+			TotalgetDBSearch(); //ì „ì²´ ê²€ìƒ‰ ë©”ì†Œë“œ í˜¸ì¶œ
 		}
 	
 	
-		//ÀÌ¸§ ¼±ÅÃ
-		else if(item.equals("ÀÌ¸§")) //¼±ÅÃ¹Ú½º¿¡¼­ ÀÌ¸§ ¼±ÅÃ
+		//ì´ë¦„ ì„ íƒ
+		else if(item.equals("ì´ë¦„")) //ì„ íƒë°•ìŠ¤ì—ì„œ ì´ë¦„ ì„ íƒ
 		{
-			NamegetDBSearch(n); //ÀÌ¸§ °Ë»ö ¸Ş¼Òµå È£Ãâ
+			NamegetDBSearch(n); //ì´ë¦„ ê²€ìƒ‰ ë©”ì†Œë“œ í˜¸ì¶œ
 		}
 		
-		//³ªÀÌ ¼±ÅÃ
-		else if(item.equals("³ªÀÌ")) //¼±ÅÃ¹Ú½º¿¡¼­ ³ªÀÌ ¼±ÅÃ
+		//ë‚˜ì´ ì„ íƒ
+		else if(item.equals("ë‚˜ì´")) //ì„ íƒë°•ìŠ¤ì—ì„œ ë‚˜ì´ ì„ íƒ
 		{
-			AgeSearch(n); //³ªÀÌ °Ë»ö ¸Ş¼Òµå È£Ãâ
+			AgeSearch(n); //ë‚˜ì´ ê²€ìƒ‰ ë©”ì†Œë“œ í˜¸ì¶œ
 		}
 		
-		//¼ºº° ¼±ÅÃ
-		else if(item.equals("¼ºº°")) //¼±ÅÃ¹Ú½º¿¡¼­ ÀüÃ¼ ¼±ÅÃ
+		//ì„±ë³„ ì„ íƒ
+		else if(item.equals("ì„±ë³„")) //ì„ íƒë°•ìŠ¤ì—ì„œ ì „ì²´ ì„ íƒ
 		{
-			SexSearch(n); //ÀüÃ¼ °Ë»ö ¸Ş¼Òµå È£Ãâ
+			SexSearch(n); //ì „ì²´ ê²€ìƒ‰ ë©”ì†Œë“œ í˜¸ì¶œ
 		}
 		
-		//»ğÀÔ ¿É¼Ç
-		if(item.equals("»ğÀÔ")) {
+		//ì‚½ì… ì˜µì…˜
+		if(item.equals("ì‚½ì…")) {
 				
-			Insert(n);
+			Insert(n); //ì‚½ì… í•¨ìˆ˜ì— ë¬¸ìì—´ n ë„£ì–´ ì‹¤í–‰
 		}
 		
-		//»èÁ¦ ¿É¼Ç
-		else if(item.equals("»èÁ¦")) {
+		//ì‚­ì œ ì˜µì…˜
+		else if(item.equals("ì‚­ì œ")) {
 					
-			nameDelete(n);
+			nameDelete(n); // ì‚­ì œí•¨ìˆ˜ ì‹¤í–‰
 		}		
 		
-		//°»½Å ¿É¼Ç
-		else if(item.equals("°»½Å")) {
+		//ê°±ì‹  ì˜µì…˜
+		else if(item.equals("ê°±ì‹ ")) {
 					
 		}
 		
@@ -135,7 +128,7 @@ public void actionPerformed(ActionEvent ae) {
 }
 
 
-//½ºÇÃ¸´ ¸Ş¼­µå
+//ë¬¸ìì—´ ìŠ¤í”Œë¦¿ ë©”ì„œë“œ
 
 /*
 public void splitString(String n) {
@@ -152,14 +145,14 @@ StringTokenizer token =new StringTokenizer(n,",");
 
 
 
-//ÀüÃ¼°Ë»ö ¸Ş¼Òµå
+//ì „ì²´ê²€ìƒ‰ ë©”ì†Œë“œ
 private void TotalgetDBSearch() {
 	Connection con = null;
 	Statement stmt = null;
 	
 	try {
 		con = DriverManager.getConnection(url, user, pass);
-		con.setCatalog("20155204"); //DBNAME ÀÔ·Â(ÃÖ»óÀ§ Å×ÀÌºí ¹­À½)
+		con.setCatalog("20155204"); //DBNAME ì…ë ¥(ìµœìƒìœ„ í…Œì´ë¸” ë¬¶ìŒ)
 		stmt = con.createStatement();
 		
 		ResultSet result = stmt.executeQuery("SELECT * FROM customer");
@@ -168,15 +161,15 @@ private void TotalgetDBSearch() {
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
-		Area.setText("ÀüÃ¼°Ë»ö °Ë»ö ...\n"); //¾È³»¹®±¸ Ãâ·Â
+		Area.setText("ì „ì²´ê²€ìƒ‰ ê²€ìƒ‰ ...\n"); //ì•ˆë‚´ë¬¸êµ¬ ì¶œë ¥
 		
-		while(result.next()) //¼øÂ÷·Î ÀĞ¤·
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ã…‡
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
 			
-			String value = "ÀÌ¸§ : " + Name + " ³ªÀÌ : " + age+ " ¼ºº° : "+ sex + "\n";
+			String value = "ì´ë¦„ : " + Name + " ë‚˜ì´ : " + age+ " ì„±ë³„ : "+ sex + "\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
@@ -188,44 +181,44 @@ private void TotalgetDBSearch() {
 	}//try end
 
 
-// ÀÌ¸§ °Ë»öÀÇ ÁúÀÇÃ³¸®È­
-private void NamegetDBSearch(String n)//ÀÌ¸§ °Ë»ö
-// »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ÀÌ¸§À» °ªÀ¸·Î ¹Ş´Â´Ù.
+// ì´ë¦„ ê²€ìƒ‰ì˜ ì§ˆì˜ì²˜ë¦¬í™”
+private void NamegetDBSearch(String n)//ì´ë¦„ ê²€ìƒ‰
+// ì‚¬ìš©ìê°€ ì…ë ¥í•œ ì´ë¦„ì„ ê°’ìœ¼ë¡œ ë°›ëŠ”ë‹¤.
 {
-	Connection con = null; //»ç¿ëÇÒ ¿¬°á ÃÊ±âÈ­
-	Statement stmt = null; //stmt °´Ã¼ ÃÊ±âÈ­
+	Connection con = null; //ì‚¬ìš©í•  ì—°ê²° ì´ˆê¸°í™”
+	Statement stmt = null; //stmt ê°ì²´ ì´ˆê¸°í™”
 	try
 	{
-		con = DriverManager.getConnection(url, user, pass); //µå¶óÀÌ¹ö ¸Å´ÏÀú Á¢¼Ó Á¤º¸ ÀÔ·Â
-		con.setCatalog("20155204"); // Á¢¼Ó Å×ÀÌºí °æ·Î(ÃÖ»óÀ§ °æ·Î)
+		con = DriverManager.getConnection(url, user, pass); //ë“œë¼ì´ë²„ ë§¤ë‹ˆì € ì ‘ì† ì •ë³´ ì…ë ¥
+		con.setCatalog("20155204"); // ì ‘ì† í…Œì´ë¸” ê²½ë¡œ(ìµœìƒìœ„ ê²½ë¡œ)
 		stmt = con.createStatement(); 
 		
-		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE name = '"+n+"'"); //µÚ¿¡ ÀÔ·Â ½ºÆ®¸µ ºÙÀÌ±â
+		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE name = '"+n+"'"); //ë’¤ì— ì…ë ¥ ìŠ¤íŠ¸ë§ ë¶™ì´ê¸°
 
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
-		Area.setText("ÀÌ¸§À¸·Î °Ë»ö ...\n"); //¾È³»¹®±¸ Ãâ·Â
-		while(result.next()) //¼øÂ÷·Î ÀĞ¤·
+		Area.setText("ì´ë¦„ìœ¼ë¡œ ê²€ìƒ‰ ...\n"); //ì•ˆë‚´ë¬¸êµ¬ ì¶œë ¥
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ã…‡
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
 			
-			String value = "ÀÌ¸§ : " + Name + " ³ªÀÌ : " + age+ " ¼ºº° : "+ sex + "\n";
+			String value = "ì´ë¦„ : " + Name + " ë‚˜ì´ : " + age+ " ì„±ë³„ : "+ sex + "\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
 		con.close();
 		stmt.close();
-		//ÀÛ¾÷ Á¾·á ¹× °ø°£ È®º¸
+		//ì‘ì—… ì¢…ë£Œ ë° ê³µê°„ í™•ë³´
 	}
 	
 	
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
-		//¿À·ù ¹ß»ı ½Ã ¸Ş½ÃÁö Ãâ·Â
+		//ì˜¤ë¥˜ ë°œìƒ ì‹œ ë©”ì‹œì§€ ì¶œë ¥
 	}
 }
 
@@ -233,44 +226,44 @@ private void NamegetDBSearch(String n)//ÀÌ¸§ °Ë»ö
 
 
 
-//³ªÀÌ °Ë»öÀÇ ÁúÀÇ Ã³¸®È­
-private void AgeSearch(String num)//³ªÀÌ °Ë»ö
-//»ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ³ªÀÌ¸¦ °ªÀ¸·Î ¹Ş´Â´Ù.
+//ë‚˜ì´ ê²€ìƒ‰ì˜ ì§ˆì˜ ì²˜ë¦¬í™”
+private void AgeSearch(String num)//ë‚˜ì´ ê²€ìƒ‰
+//ì‚¬ìš©ìê°€ ì…ë ¥í•œ ë‚˜ì´ë¥¼ ê°’ìœ¼ë¡œ ë°›ëŠ”ë‹¤.
 {
-	Connection con = null; //»ç¿ëÇÒ ¿¬°á ÃÊ±âÈ­
-	Statement stmt = null; //stmt °´Ã¼ ÃÊ±âÈ­
+	Connection con = null; //ì‚¬ìš©í•  ì—°ê²° ì´ˆê¸°í™”
+	Statement stmt = null; //stmt ê°ì²´ ì´ˆê¸°í™”
 	try
 	{
-		con = DriverManager.getConnection(url, user, pass); //µå¶óÀÌ¹ö ¸Å´ÏÀú Á¢¼Ó Á¤º¸ ÀÔ·Â
-		con.setCatalog("20155204"); // Á¢¼Ó Å×ÀÌºí °æ·Î(ÃÖ»óÀ§ °æ·Î)
+		con = DriverManager.getConnection(url, user, pass); //ë“œë¼ì´ë²„ ë§¤ë‹ˆì € ì ‘ì† ì •ë³´ ì…ë ¥
+		con.setCatalog("20155204"); // ì ‘ì† í…Œì´ë¸” ê²½ë¡œ(ìµœìƒìœ„ ê²½ë¡œ)
 		stmt = con.createStatement(); 
 		
-		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE age = "+num); //µÚ¿¡ ÀÔ·Â ½ºÆ®¸µ ºÙÀÌ±â
+		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE age = "+num); //ë’¤ì— ì…ë ¥ ìŠ¤íŠ¸ë§ ë¶™ì´ê¸°
 
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		
-		while(result.next()) //¼øÂ÷·Î ÀĞ¤·
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ã…‡
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
 			
-			String value = "ÀÌ¸§ : " + Name + " ³ªÀÌ : " + age+ " ¼ºº° : "+ sex + "\n";
+			String value = "ì´ë¦„ : " + Name + " ë‚˜ì´ : " + age+ " ì„±ë³„ : "+ sex + "\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
 		con.close();
 		stmt.close();
-		//ÀÛ¾÷ Á¾·á ¹× °ø°£ È®º¸
-		//ÀÛ¾÷ Á¾·á ¹× °ø°£ È®º¸
+		//ì‘ì—… ì¢…ë£Œ ë° ê³µê°„ í™•ë³´
+		//ì‘ì—… ì¢…ë£Œ ë° ê³µê°„ í™•ë³´
 	}
 	
 	
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
-		//¿À·ù ¹ß»ı ½Ã ¸Ş½ÃÁö Ãâ·Â
+		//ì˜¤ë¥˜ ë°œìƒ ì‹œ ë©”ì‹œì§€ ì¶œë ¥
 	}
 }
 
@@ -281,45 +274,45 @@ private void AgeSearch(String num)//³ªÀÌ °Ë»ö
 
 
 
-//¼ºº° °Ë»öÀÇ ÁúÀÇ Ã³¸®È­
-private void SexSearch(String s)//³ªÀÌ °Ë»ö
-//»ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ³ªÀÌ¸¦ °ªÀ¸·Î ¹Ş´Â´Ù.
+//ì„±ë³„ ê²€ìƒ‰ì˜ ì§ˆì˜ ì²˜ë¦¬í™”
+private void SexSearch(String s)//ë‚˜ì´ ê²€ìƒ‰
+//ì‚¬ìš©ìê°€ ì…ë ¥í•œ ë‚˜ì´ë¥¼ ê°’ìœ¼ë¡œ ë°›ëŠ”ë‹¤.
 {
-	Connection con = null; //»ç¿ëÇÒ ¿¬°á ÃÊ±âÈ­
-	Statement stmt = null; //stmt °´Ã¼ ÃÊ±âÈ­
+	Connection con = null; //ì‚¬ìš©í•  ì—°ê²° ì´ˆê¸°í™”
+	Statement stmt = null; //stmt ê°ì²´ ì´ˆê¸°í™”
 	try
 	{
-		con = DriverManager.getConnection(url, user, pass); //µå¶óÀÌ¹ö ¸Å´ÏÀú Á¢¼Ó Á¤º¸ ÀÔ·Â
-		con.setCatalog("20155204"); // Á¢¼Ó Å×ÀÌºí °æ·Î(ÃÖ»óÀ§ °æ·Î)
+		con = DriverManager.getConnection(url, user, pass); //ë“œë¼ì´ë²„ ë§¤ë‹ˆì € ì ‘ì† ì •ë³´ ì…ë ¥
+		con.setCatalog("20155204"); // ì ‘ì† í…Œì´ë¸” ê²½ë¡œ(ìµœìƒìœ„ ê²½ë¡œ)
 		stmt = con.createStatement(); 
 		
-		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE sex = '"+s+"'"); //µÚ¿¡ ÀÔ·Â ½ºÆ®¸µ ºÙÀÌ±â
+		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE sex = '"+s+"'"); //ë’¤ì— ì…ë ¥ ìŠ¤íŠ¸ë§ ë¶™ì´ê¸°
 
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
 		
-		while(result.next()) //¼øÂ÷·Î ÀĞ¤·
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ã…‡
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
 			
-			String value = "ÀÌ¸§ : " + Name + " ³ªÀÌ : " + age+ " ¼ºº° : "+ sex + "\n";
+			String value = "ì´ë¦„ : " + Name + " ë‚˜ì´ : " + age+ " ì„±ë³„ : "+ sex + "\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
 		con.close();
 		stmt.close();
-		//ÀÛ¾÷ Á¾·á ¹× °ø°£ È®º¸
-		//ÀÛ¾÷ Á¾·á ¹× °ø°£ È®º¸
+		//ì‘ì—… ì¢…ë£Œ ë° ê³µê°„ í™•ë³´
+		//ì‘ì—… ì¢…ë£Œ ë° ê³µê°„ í™•ë³´
 	}
 	 
 	
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
-		//¿À·ù ¹ß»ı ½Ã ¸Ş½ÃÁö Ãâ·Â
+		//ì˜¤ë¥˜ ë°œìƒ ì‹œ ë©”ì‹œì§€ ì¶œë ¥
 	}
 }
 
@@ -328,20 +321,20 @@ private void SexSearch(String s)//³ªÀÌ °Ë»ö
 
 
 //private void Insert(String name, String age, String sex)
-//µ¥ÀÌÅÍ »ğÀÔ ¸Ş¼Òµå
+//ë°ì´í„° ì‚½ì… ë©”ì†Œë“œ
 private void Insert(String n) {
 	try {
 		Connection con;
 		Statement stmt;
-		//Connection °´Ã¼¸¦ »ç¿ëÇÏ¿© DB¿¡ ¿¬°áÀ» ¼³Á¤
+		//Connection ê°ì²´ë¥¼ ì‚¬ìš©í•˜ì—¬ DBì— ì—°ê²°ì„ ì„¤ì •
 		con = DriverManager.getConnection(url, user, pass);
 		con.setCatalog(user);
-		//ÁúÀÇ¹® ÀÛ¼ºÀ» À§ÇÑ statement °´Ã¼ »ı¼º
+		//ì§ˆì˜ë¬¸ ì‘ì„±ì„ ìœ„í•œ statement ê°ì²´ ìƒì„±
 		stmt = con.createStatement();
 		
 		
 		
-		// ¹®ÀÚ¿­ parsing
+		// ë¬¸ìì—´ parsing
 		int i = 0;
 		String []arr = new String[3];
 		StringTokenizer token =new StringTokenizer(n,",");
@@ -354,18 +347,18 @@ private void Insert(String n) {
 		String age = arr[1];
 		String sex = arr[2];
 		
-		//»ı¼ºµÈ Å×ÀÌºí¿¡ °ªÀ» »ğÀÔ
+		//ìƒì„±ëœ í…Œì´ë¸”ì— ê°’ì„ ì‚½ì…
 		stmt.executeQuery("INSERT INTO customer VALUES('"+ name +"'," +age +",'"+ sex +"')");
 		
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		
-		Area.insertText("\nInsert Complete.\n", 0); //¿À·ù°¡ ¶ßÁö¸¸ Äõ¸®´Â ÀÛµ¿ÇÑ´Ù. ¿À·ù¶§¹®¿¡ ÀÌÇÏ ¹®±¸ Ãâ·ÂÀÌ ¾È µÇ´Â°Å °°À½.
-		//ÅØ½ºÆ® area ÃÊ±âÈ­
+		Area.insertText("\nInsert Complete.\n", 0); //ì˜¤ë¥˜ê°€ ëœ¨ì§€ë§Œ ì¿¼ë¦¬ëŠ” ì‘ë™í•œë‹¤. ì˜¤ë¥˜ë•Œë¬¸ì— ì´í•˜ ë¬¸êµ¬ ì¶œë ¥ì´ ì•ˆ ë˜ëŠ”ê±° ê°™ìŒ.
+		//í…ìŠ¤íŠ¸ area ì´ˆê¸°í™”
 
 		
-		//ÀÛ¾÷ Á¾·á ÈÄ statement, connection °´Ã¼ ´İ±â
+		//ì‘ì—… ì¢…ë£Œ í›„ statement, connection ê°ì²´ ë‹«ê¸°
 		stmt.close();
 		con.close();
 		
@@ -374,12 +367,12 @@ private void Insert(String n) {
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
 		
-		//¿À·ù ¸Ş½ÃÁö °ËÃâ
+		//ì˜¤ë¥˜ ë©”ì‹œì§€ ê²€ì¶œ
 	}
 }
 
 
-//µ¥ÀÌÅÍ »èÁ¦ ¸Ş¼Òµå
+//ë°ì´í„° ì‚­ì œ ë©”ì†Œë“œ
 void nameDelete(String r) {
 	
 	try {
@@ -389,12 +382,12 @@ void nameDelete(String r) {
 		con.setCatalog("20155204");
 		
 		stmt = con.createStatement();
-		//¿¬°áµÈ DB¹®¿¡¼­ ÁúÀÇ¹® ÀÛ¼ºÀ» À§ÇÑ °´Ã¼ »ı¼º
+		//ì—°ê²°ëœ DBë¬¸ì—ì„œ ì§ˆì˜ë¬¸ ì‘ì„±ì„ ìœ„í•œ ê°ì²´ ìƒì„±
 		
 		stmt.executeQuery("delete FROM customer WHERE name = '"+r+"'");
-		//Äõ¸®¹®
+		//ì¿¼ë¦¬ë¬¸
 
-		//ÅØ½ºÆ® area ÃÊ±âÈ­
+		//í…ìŠ¤íŠ¸ area ì´ˆê¸°í™”
 	/*	String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
@@ -402,7 +395,7 @@ void nameDelete(String r) {
 		
 		Area.setText("Delete Complete.");
 		
-		//Á¾·á ¹× °ø°£È®º¸ ½ÃÀÛ
+		//ì¢…ë£Œ ë° ê³µê°„í™•ë³´ ì‹œì‘
 		stmt.close();
 		con.close();
 
@@ -410,10 +403,10 @@ void nameDelete(String r) {
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
 	}
-}//»èÁ¦ ¸Ş¼Òµå Á¾·á
+}//ì‚­ì œ ë©”ì†Œë“œ ì¢…ë£Œ
 
 
-//°»½Å ¸Ş¼Òµå (°»½Å ½Ã ¸¶´Ù ³ªÀÌ 1¾¿ Ãß°¡)
+//ê°±ì‹  ë©”ì†Œë“œ (ê°±ì‹  ì‹œ ë§ˆë‹¤ ë‚˜ì´ 1ì”© ì¶”ê°€)
 
 
-}// ÀüÃ¼ Á¾·á
+}// ì „ì²´ ì¢…ë£Œ
