@@ -19,7 +19,7 @@ public class AppletTest extends Applet implements ActionListener{
 
 
 private String url = "jdbc:inetdae7://210.115.229.77:2433";
-// 주소 값 저장 변수
+// 주소 값 저장 변수, inet사의 merlia 사용으로 추가
 private String user = "20155204";
 // ID 값 저장 변수
 private String pass = "Ecks0407@";
@@ -37,26 +37,23 @@ public void init() {
 	}
 }
 
-
+//인터페이스 설정
 public void start() {
 	setLayout(new FlowLayout()); // 레이아웃 배치자
 	label = new Label("작업 선택"); // 안내문구
 	add(label); // 라벨추가
 
-
+	//선택박스 생성 후 선택지 설정
 	search = new Choice(); //선택 (체크박스)
 	search.add("--");
 	search.add("전체"); // 전체 셋
 	search.add("이름"); // 이름 셋
 	search.add("나이"); // 나이 셋
 	search.add("성별"); // 성별 셋
-/*	search.add("--");  					////
-	search.add("삽입");
-	search.add("삭제");
-	search.add("갱신");
-*/
+
 	add(search); // 선택박스 추가
 	
+	//선택박스 선언 후 선택지 추가
 	option = new Choice();
 	option.add("--");
 	option.add("삽입");
@@ -67,10 +64,14 @@ public void start() {
 
 	textField = new TextField(10); //텍스트 필드 객체 생성(검색어 입력 영역)
 	add(textField);// 텍스트 필드 추가(검색어 입력 영역)
+	
+	//search 버튼 
 	button = new Button("search");
 	add(button);
+	//텍스트 에리어 지정
 	Area = new TextArea(10,50);
 	add(Area);
+	//버튼 액션 지정
 	button.addActionListener(this);
 }
 
@@ -79,16 +80,22 @@ public void start() {
 
 //Action event handle (쿼리 선택)
 public void actionPerformed(ActionEvent ae) {
+	//커넥션, 스테이트먼트 초기화
 	Connection con = null;
 	Statement stmt = null;
 	
+	//search 선택박스로 얻는 데이터 전달
 	String st = ae.getActionCommand();
 	String item = search.getSelectedItem();
 	
+	//option 선택박스로 얻는 데이터 전달
 	String opt = ae.getActionCommand();
 	String item1 = option.getSelectedItem();
 	
+	//텍스트필드 내용 n에 전달
 	String n = textField.getText();
+	
+// 분기
 if(item.equals("전체") && item1.equals("--") )
 {
 	TotalgetDBSearch(); //전체 검색 메소드 호출
@@ -125,51 +132,45 @@ else if (item.equals("--") && item1.equals("갱신") )
 
 }//action end
 
-//스플릿 메서드
-
-/*
-public void splitString(String n) {
-int i = 0;
-String []arr = new String[3];
-StringTokenizer token =new StringTokenizer(n,",");
-	while(token.hasMoreTokens()) {
-	arr[i] = token.nextToken();
-	i++;
-	}
-}
-	*/
-
-
-
 
 //전체검색 메소드
 private void TotalgetDBSearch() {
+	//커넥션, 스테이트먼트 객체 초기화
 	Connection con = null;
 	Statement stmt = null;
 	
 	try {
+		//드라이버매니저가 접속에 필요한 인자 전달
 		con = DriverManager.getConnection(url, user, pass);
 		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+		
+		//stmt객체 선언
 		stmt = con.createStatement();
 		
+		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("SELECT * FROM customer");
 		
+		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
 		Area.setText("전체검색 검색 ...\n"); //안내문구 출력
 		
-		while(result.next()) //순차로 읽ㅇ
+		while(result.next()) //순차로 읽어들임
 		{
+			//getstring의 번호 값의 열 데이터를 저장
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
 			
+			//출력 형식 지정
 			String value = "이름 : " + Name + " 나이 : " + age+ " 성별 : "+ sex + "\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
+		
+		//작업 종료 후 객체 닫기(자원확보)
 		con.close();
 		stmt.close();
 		}
@@ -190,17 +191,19 @@ private void NamegetDBSearch(String n)//이름 검색
 		con.setCatalog("20155204"); // 접속 테이블 경로(최상위 경로)
 		stmt = con.createStatement(); 
 		
+		//쿼리 실행결과 저장
 		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE name = '"+n+"'"); //뒤에 입력 스트링 붙이기
 
 		
-		
+		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
 		Area.setText("이름으로 검색 ...\n"); //안내문구 출력
-		while(result.next()) //순차로 읽ㅇ
+		while(result.next()) //순차로 읽어돌이기
 		{
+			//getString의 번호 값의 열 데이터 받아오기
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
@@ -237,13 +240,15 @@ private void AgeSearch(String num)//나이 검색
 		con.setCatalog("20155204"); // 접속 테이블 경로(최상위 경로)
 		stmt = con.createStatement(); 
 		
-		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE age = "+num); //뒤에 입력 스트링 붙이기
+		//쿼리 실행결과 result에 저장
+		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE age = "+num); 
 
+		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		
-		while(result.next()) //순차로 읽ㅇ
+		while(result.next()) //순차로 읽어들이기
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
@@ -285,15 +290,18 @@ private void SexSearch(String s)//나이 검색
 		con.setCatalog("20155204"); // 접속 테이블 경로(최상위 경로)
 		stmt = con.createStatement(); 
 		
-		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE sex = '"+s+"'"); //뒤에 입력 스트링 붙이기
-
+		//result에 쿼리 실행결과 저장
+		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE sex = '"+s+"'"); 
+		
+		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
 		
-		while(result.next()) //순차로 읽ㅇ
+		while(result.next()) //순차로 읽어들이기
 		{
+			//각 함수 인자 값에 해당하는 열 데이터 받아옴
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String sex = result.getString(3);
@@ -323,6 +331,7 @@ private void SexSearch(String s)//나이 검색
 //데이터 삽입 메소드
 private void Insert(String n) {
 	try {
+		//커넥션, 스테이트먼트 객체 선언
 		Connection con;
 		Statement stmt;
 		//Connection 객체를 사용하여 DB에 연결을 설정
@@ -335,7 +344,7 @@ private void Insert(String n) {
 
 		Area.setText("Insert complete\n"); //안내문구 출력
 		
-		// 문자열 parsing
+		//받아온 문자열 parsing하여 저장
 		int i = 0;
 		String []arr = new String[3];
 		StringTokenizer token =new StringTokenizer(n,",");
@@ -351,14 +360,14 @@ private void Insert(String n) {
 		//생성된 테이블에 값을 삽입
 		stmt.executeQuery("INSERT INTO customer VALUES('"+ name +"'," +age +",'"+ sex +"')");
 		
+		//텍스트 에리어 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		
 		
 		
-		//insertText("Insert Complete.\n", 0); //오류가 뜨지만 쿼리는 작동한다. 오류때문에 이하 문구 출력이 안 되는거 같음.
-		//텍스트 area 초기화
+		//insertText("Insert Complete.\n", 0); 
 
 		
 		//작업 종료 후 statement, connection 객체 닫기
@@ -379,9 +388,14 @@ private void Insert(String n) {
 void nameDelete(String r) {
 	
 	try {
+		// 커넥션, 스테이트먼트 객체 선언
 		Connection con;
 		Statement stmt;
+		
+		//드라이버 매니저에 필요한 인자 전달
 		con = DriverManager.getConnection(url, user, pass);
+		
+		//접속 DB 지정
 		con.setCatalog("20155204");
 		
 		stmt = con.createStatement();
@@ -390,15 +404,8 @@ void nameDelete(String r) {
 		Area.setText("Delete Complete.");
 		
 		stmt.executeQuery("delete FROM customer WHERE name = '"+r+"'");
-		//쿼리문
+		//삭제 쿼리문
 
-		//텍스트 area 초기화
-	/*	String count = Area.getText();
-		int c = count.length();
-		Area.replaceText(" ", 0, c);
-		*/
-		
-		
 		
 		//종료 및 공간확보 시작
 		stmt.close();
@@ -425,8 +432,11 @@ void updatee() {
 			
 			Area.setText("Update Complete.");
 			
+		
 			ResultSet result = stmt.executeQuery("SELECT * FROM customer"); //쿼리 결과 result에 저장
 			
+			
+			//텍스트 필드 초기화
 			String count = Area.getText();
 			int c = count.length();
 			Area.replaceText(" ", 0, c);
