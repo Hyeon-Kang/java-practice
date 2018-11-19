@@ -36,7 +36,7 @@ private String url = "jdbc:inetdae7://210.115.229.77:2433";
 private String user = "20155204";
 // ID 값 저장 변수
 	
-private String pass = "Ecks0407@";
+private String pass = "(비밀번호)";
 // PW 값 저장 변수
 
 
