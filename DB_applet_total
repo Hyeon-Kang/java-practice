@@ -1,5 +1,4 @@
-///주석 정리 및 최적화 필요!
-
+//181119 최종완성 확인
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
