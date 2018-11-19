@@ -6,36 +6,36 @@ import java.sql.*;
 
 public class AppletEx1Execute extends Applet implements ActionListener{
 
-	Label label; // ¶óº§ ¼±¾ğ
-	TextArea Area; //°á°ú °ªÀ» Ãâ·ÂÇÒ ÅØ½ºÆ® ¿¡¸®¾î ¼±¾ğ
-	Button button; //ÀÔ·Â¹öÆ° ¼±¾ğ
+	Label label; // ë¼ë²¨ ì„ ì–¸
+	TextArea Area; //ê²°ê³¼ ê°’ì„ ì¶œë ¥í•  í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì„ ì–¸
+	Button button; //ì…ë ¥ë²„íŠ¼ ì„ ì–¸
 
 
-private String url = "jdbc:inetdae7://210.115.229.77:2433"; //merlia ¸¦ ÀÌ¿ëÇÏ±â ¶§¹®¿¡ inetdae7
-// ÁÖ¼Ò °ª ÀúÀå º¯¼ö
+private String url = "jdbc:inetdae7://210.115.229.77:2433"; //merlia ë¥¼ ì´ìš©í•˜ê¸° ë•Œë¬¸ì— inetdae7
+// ì£¼ì†Œ ê°’ ì €ì¥ ë³€ìˆ˜
 private String user = "20155204";
-// ID °ª ÀúÀå º¯¼ö
-private String pass = "Ecks0407@";
-// PW °ª ÀúÀå º¯¼ö
+// ID ê°’ ì €ì¥ ë³€ìˆ˜
+private String pass = "(ë¹„ë°€ë²ˆí˜¸)";
+// PW ê°’ ì €ì¥ ë³€ìˆ˜
 
 
-//JDBC µå¶óÀÌ¹ö ·Îµù
+//JDBC ë“œë¼ì´ë²„ ë¡œë”©
 public void init() {
 	try{
 		Class.forName("com.inet.tds.TdsDriver");
 	}
 	catch(ClassNotFoundException e) {
 		System.out.println("Class Loading Failed");
-		//·Îµù ½ÇÆĞ½Ã Ãâ·Â ¸Ş½ÃÁö
+		//ë¡œë”© ì‹¤íŒ¨ì‹œ ì¶œë ¥ ë©”ì‹œì§€
 	}
 }
 
 
-//Interface ¼³Á¤
+//Interface ì„¤ì •
 public void start() {
-	setLayout(new FlowLayout()); // ·¹ÀÌ¾Æ¿ô ¹èÄ¡ÀÚ
+	setLayout(new FlowLayout()); // ë ˆì´ì•„ì›ƒ ë°°ì¹˜ì
 	
-	label = new Label("°Ë »ö");
+	label = new Label("ê²€ ìƒ‰");
 	add(label);
 	
 	button = new Button("search");
@@ -47,7 +47,7 @@ public void start() {
 }//start end
 
 
-//Action event handle (Äõ¸® ¼±ÅÃ)
+//Action event handle (ì¿¼ë¦¬ ì„ íƒ)
 public void actionPerformed(ActionEvent ae) {
 	Connection con = null;
 	Statement stmt = null;
@@ -59,14 +59,14 @@ public void actionPerformed(ActionEvent ae) {
 
 
 
-//ÀüÃ¼°Ë»ö ¸Ş¼Òµå
+//ì „ì²´ê²€ìƒ‰ ë©”ì†Œë“œ
 private void searchh() {
 	Connection con = null;
 	Statement stmt = null;
 	
 	try {
 		con = DriverManager.getConnection(url, user, pass);
-		con.setCatalog("20155204"); //DBNAME ÀÔ·Â(ÃÖ»óÀ§ Å×ÀÌºí ¹­À½)
+		con.setCatalog("20155204"); //DBNAME ì…ë ¥(ìµœìƒìœ„ í…Œì´ë¸” ë¬¶ìŒ)
 		stmt = con.createStatement();
 		
 		ResultSet result = stmt.executeQuery("SELECT * FROM hallym");
@@ -75,9 +75,9 @@ private void searchh() {
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
-		Area.setText("ÀüÃ¼°Ë»ö ...\n"); //¾È³»¹®±¸ Ãâ·Â
+		Area.setText("ì „ì²´ê²€ìƒ‰ ...\n"); //ì•ˆë‚´ë¬¸êµ¬ ì¶œë ¥
 		
-		while(result.next()) //¼øÂ÷·Î ÀĞ¾îµéÀÓ
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ì–´ë“¤ì„
 		{
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
@@ -87,7 +87,7 @@ private void searchh() {
 			String phone = result.getString(6);
 			
 			
-			String value = "ÀÌ¸§ : " + Name + " /³ªÀÌ : " + age+ " /ID : "+ id + " /Password : "+pass+ " /e-mail : "+email+" /phone : "+phone+"\n";
+			String value = "ì´ë¦„ : " + Name + " /ë‚˜ì´ : " + age+ " /ID : "+ id + " /Password : "+pass+ " /e-mail : "+email+" /phone : "+phone+"\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
@@ -100,4 +100,4 @@ private void searchh() {
 
 
 
-}//AppletEx1 ½ÇÇà±â Á¾·á
+}//AppletEx1 ì‹¤í–‰ê¸° ì¢…ë£Œ
