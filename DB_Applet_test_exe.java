@@ -1,5 +1,5 @@
-/// Applet_test_½ÇÇà±â
-///ÁÖ¼® ´Ş°í ÄÚµå Á¤¸®ÇÊ¿ä need to optimize
+/// Applet_test_ì‹¤í–‰ê¸°
+///ì£¼ì„ ë‹¬ê³  ì½”ë“œ ì •ë¦¬í•„ìš” need to optimize
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
@@ -7,79 +7,96 @@ import java.sql.*;
 
 public class AppletEx1Execute extends Applet implements ActionListener{
 
-	Label label; // ¶óº§ ¼±¾ğ
-	TextArea Area; //°á°ú °ªÀ» Ãâ·ÂÇÒ ÅØ½ºÆ® ¿¡¸®¾î ¼±¾ğ
-	Button button; //ÀÔ·Â¹öÆ° ¼±¾ğ
+	Label label; // ë¼ë²¨ ì„ ì–¸
+	TextArea Area; //ê²°ê³¼ ê°’ì„ ì¶œë ¥í•  í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì„ ì–¸
+	Button button; //ì…ë ¥ë²„íŠ¼ ì„ ì–¸
 
 
-private String url = "jdbc:inetdae7://210.115.229.77:2433"; //merlia ¸¦ ÀÌ¿ëÇÏ±â ¶§¹®¿¡ inetdae7
-// ÁÖ¼Ò °ª ÀúÀå º¯¼ö
+private String url = "jdbc:inetdae7://210.115.229.77:2433"; //merlia ë¥¼ ì´ìš©í•˜ê¸° ë•Œë¬¸ì— inetdae7
+// ì£¼ì†Œ ê°’ ì €ì¥ ë³€ìˆ˜, inetì‚¬ì˜ merliaì‚¬ìš©
 private String user = "20155204";
-// ID °ª ÀúÀå º¯¼ö
+// ID ê°’ ì €ì¥ ë³€ìˆ˜
 private String pass = "Ecks0407@";
-// PW °ª ÀúÀå º¯¼ö
+// PW ê°’ ì €ì¥ ë³€ìˆ˜
 
 
-//JDBC µå¶óÀÌ¹ö ·Îµù
+//JDBC ë“œë¼ì´ë²„ ë¡œë”©
 public void init() {
 	try{
 		Class.forName("com.inet.tds.TdsDriver");
 	}
 	catch(ClassNotFoundException e) {
 		System.out.println("Class Loading Failed");
-		//·Îµù ½ÇÆĞ½Ã Ãâ·Â ¸Ş½ÃÁö
+		//ë¡œë”© ì‹¤íŒ¨ì‹œ ì¶œë ¥ ë©”ì‹œì§€
 	}
 }
 
 
-//Interface ¼³Á¤
+//Interface ì„¤ì •
 public void start() {
-	setLayout(new FlowLayout()); // ·¹ÀÌ¾Æ¿ô ¹èÄ¡ÀÚ
+	setLayout(new FlowLayout()); // ë ˆì´ì•„ì›ƒ ë°°ì¹˜ì
 	
-	label = new Label("°Ë »ö");
+	//ë¼ë²¨ì¶”ê°€
+	label = new Label("ê²€ ìƒ‰");
 	add(label);
 	
+	//ë²„íŠ¼ ì¶”ê°€
 	button = new Button("search");
 	add(button);
 
+	//í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ë²”ìœ„ ì§€ì • ë° ì¶”ê°€
 	Area = new TextArea(10,50);
 	add(Area);
+	
+	//ë²„íŠ¼ ì•¡ì…˜í•¨ìˆ˜ ì§€ì •
 	button.addActionListener(this);
 }//start end
 
 
-//Action event handle (Äõ¸® ¼±ÅÃ)
+//Action event handle (ì¿¼ë¦¬ ì„ íƒ)
 public void actionPerformed(ActionEvent ae) {
+	//ì»¤ë„¥ì…˜, ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ ê°ì²´ ì´ˆê¸°í™”
 	Connection con = null;
 	Statement stmt = null;
 	
+	//í•´ë‹¹ í•¨ìˆ˜ë¡œ ë“¤ì–´ì˜¨ ì¸ì stì— ì €ì¥
 	String st = ae.getActionCommand();
 	
+	//searchhí•¨ìˆ˜ ì‹¤í–‰
 	searchh();
 }//action end
 
 
 
-//ÀüÃ¼°Ë»ö ¸Ş¼Òµå
+//ì „ì²´ê²€ìƒ‰ ë©”ì†Œë“œ
 private void searchh() {
+	//ì»¤ë„¥ì…˜, ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ ê°ì²´ ì´ˆê¸°í™”
 	Connection con = null;
 	Statement stmt = null;
 	
-	try {
+	try {	
+		//ë“œë¼ì´ë²„ ë§¤ë‹ˆì €ê°€ ì—°ê²°ì— ì‚¬ìš©í•  ê°’ ì „ë‹¬
 		con = DriverManager.getConnection(url, user, pass);
-		con.setCatalog("20155204"); //DBNAME ÀÔ·Â(ÃÖ»óÀ§ Å×ÀÌºí ¹­À½)
+		
+		//DBNAME ì…ë ¥(ìµœìƒìœ„ í…Œì´ë¸” ë¬¶ìŒ)
+		con.setCatalog("20155204"); 
+		
+		//ê°ì²´ ë°ì´í„° stmtì— ì €ì¥
 		stmt = con.createStatement();
 		
+		//ì¿¼ë¦¬ ì‹¤í–‰ê²°ê³¼ resultì— ì €ì¥
 		ResultSet result = stmt.executeQuery("SELECT * FROM hallym");
 		
+		//í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì´ˆê¸°í™”
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 
-		Area.setText("ÀüÃ¼°Ë»ö ...\n"); //¾È³»¹®±¸ Ãâ·Â
+		Area.setText("ì „ì²´ê²€ìƒ‰ ...\n"); //ì•ˆë‚´ë¬¸êµ¬ ì¶œë ¥
 		
-		while(result.next()) //¼øÂ÷·Î ÀĞ¾îµéÀÓ
+		while(result.next()) //ìˆœì°¨ë¡œ ì½ì–´ë“¤ì„
 		{
+			//getStringì— ë¶€ì—¬ëœ ë²ˆí˜¸ì˜ ì—´ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 			String Name = result.getString(1);
 			String age = Integer.toString(result.getInt(2));
 			String id = result.getString(3);
@@ -87,11 +104,12 @@ private void searchh() {
 			String email = result.getString(5);
 			String phone = result.getString(6);
 			
-			
-			String value = "ÀÌ¸§ : " + Name + " /³ªÀÌ : " + age+ " /ID : "+ id + " /Password : "+pass+ " /e-mail : "+email+" /phone : "+phone+"\n";
+			//ì¶œë ¥ í˜•ì‹
+			String value = "ì´ë¦„ : " + Name + " /ë‚˜ì´ : " + age+ " /ID : "+ id + " /Password : "+pass+ " /e-mail : "+email+" /phone : "+phone+"\n";
 			int index = Area.getText().length();
 			Area.insertText(value, index);
 		}
+		//ì‘ì—… ì¢…ë£Œ í›„ ê°ì²´ ë‹«ê¸°(ìì› í™•ë³´ ì ˆì°¨)
 		con.close();
 		stmt.close();
 		}
@@ -101,4 +119,4 @@ private void searchh() {
 
 
 
-}//AppletEx1 ½ÇÇà±â Á¾·á
+}//AppletEx1 ì‹¤í–‰ê¸° ì¢…ë£Œ
