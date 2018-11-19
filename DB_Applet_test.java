@@ -1,5 +1,5 @@
 ///최종 편집일 181119
-///주석달고 코드 정리필요 need to optimize
+
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
