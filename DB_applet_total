@@ -1,50 +1,28 @@
+///주석 정리 및 최적화 필요!
+
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
 import java.sql.*;
-import java.util.StringTokenizer;
+import java.util.StringTokenizer; //문자열 parsing을 위해 추가
 
-public class AppletEx1 extends Applet implements ActionListener{
-/*	Choice search; //�˻� ���� ���ùڽ� ����
-	Choice option; //��� ���� �ڽ� ����
-*/
-	//Label label;
 
-<<<<<<< HEAD
-	Label lname; //�� ����
-	Label lage;
-	Label lid;
-	Label lpass;
-	Label lmail;
-	Label lphone;
 
-	//TextField textField;
 
-	TextField tname; //���� �Է¹��� �ؽ�Ʈ �ʵ� ����
-	TextField tage;
-	TextField tid;
-	TextField tpass;
-	TextField tmail;
-	TextField tphone;
-
-	
-	TextArea Area; //��� ���� ����� �ؽ�Ʈ ������ ����
-	Button button; //�Է¹�ư ����
-=======
 public class AppletTest extends Applet implements ActionListener{
 	Choice search; //검색 조건 선택박스 선언
+	Choice option; //기능 선택 박스 선언
 	Label label; //라벨 선언
 	TextField textField; //값을 입력받을 텍스트 필드 선언
 	TextArea Area; //결과 값을 출력할 텍스트 에리어 선언
 	Button button; //검색버튼 선언
->>>>>>> 6a2fababb3697996133c69b26731bd191a20ff63
 
 
 private String url = "jdbc:inetdae7://210.115.229.77:2433";
-// 주소 값 저장 변수, JDBC의 merlia를 사용하기 때문에 inetdae7을 사용.
+// 주소 값 저장 변수
 private String user = "20155204";
 // ID 값 저장 변수
-private String pass = "password";   ////(변경 필요)
+private String pass = "Ecks0407@";
 // PW 값 저장 변수
 
 
@@ -59,171 +37,109 @@ public void init() {
 	}
 }
 
-<<<<<<< HEAD
 
-//Interface ����
-public void start() {
-	setLayout(new FlowLayout()); // ���̾ƿ� ��ġ��
-	
-	lname = new Label("�� ��"); // �ȳ�����
-	add(lname);
-	tname = new TextField(10);
-	add(tname);
-	
-	lage = new Label("�� ��");
-	add(lage); // ���߰�
-	tage = new TextField(10);
-	add(tage);
-	
-	lid = new Label("ID");
-	add(lid);
-	tid = new TextField(10);
-	add(tid);
-	
-	lpass = new Label("password");
-	add(lpass);
-	tpass = new TextField(10);
-	add(tpass);
-	
-	lmail = new Label("e-mail");
-	add(lmail);
-	tmail = new TextField(10);
-	add(tmail);
-	
-	lphone = new Label("phone");
-	add(lphone);
-	tphone = new TextField(10);
-	add(tphone);
-
-=======
-//인터페이스 구성
 public void start() {
 	setLayout(new FlowLayout()); // 레이아웃 배치자
 	label = new Label("작업 선택"); // 안내문구
 	add(label); // 라벨추가
 
-	
+
 	search = new Choice(); //선택 (체크박스)
 	search.add("--");
 	search.add("전체"); // 전체 셋
 	search.add("이름"); // 이름 셋
 	search.add("나이"); // 나이 셋
 	search.add("성별"); // 성별 셋
-	search.add("--");  					////
+/*	search.add("--");  					////
 	search.add("삽입");
 	search.add("삭제");
 	search.add("갱신");
+*/
 	add(search); // 선택박스 추가
+	
+	option = new Choice();
+	option.add("--");
+	option.add("삽입");
+	option.add("삭제");
+	option.add("갱신");
+	add(option);
 	
 
 	textField = new TextField(10); //텍스트 필드 객체 생성(검색어 입력 영역)
 	add(textField);// 텍스트 필드 추가(검색어 입력 영역)
-	button = new Button("search"); //"search" 버튼 추가
+	button = new Button("search");
 	add(button);
-	Area = new TextArea(10,50); //텍스트 에리어 추가
+	Area = new TextArea(10,50);
 	add(Area);
-	button.addActionListener(this); // 버튼 액션 지정.
-}
-
-//Action event handle (쿼리 선택)
-public void actionPerformed(ActionEvent ae) {
-	Connection con = null;
-	//커넥션 객체 초기화
-	Statement stmt = null;
-	//스테이트먼트 객체 초기화
-	
-	String st = ae.getActionCommand();
-	//문자열 변수 st에  ActionEvent 인자 내용 저장.
-	String item = search.getSelectedItem();
-	//문자열 변수 item에 search선택박스의 선택 아이템 문자열 저장.
-	
-	//search 내용 선택 값에 따른 분기 발생
-	if(st.equals("search")) {
-		String n = textField.getText();
-		//문자열 변수 n에 텍스트 필드의 내용 가져오기
-		
-		//전체 선택
-		if(item.equals("--")) {}
-		
-		else if(item.equals("전체")) //선택박스에서 전체 선택
-		{
-			TotalgetDBSearch(); //전체 검색 메소드 호출
-		}
-	
-	
-		//이름 선택
-		else if(item.equals("이름")) //선택박스에서 이름 선택
-		{
-			NamegetDBSearch(n); //이름 검색 메소드 호출
-		}
-		
-		//나이 선택
-		else if(item.equals("나이")) //선택박스에서 나이 선택
-		{
-			AgeSearch(n); //나이 검색 메소드 호출
-		}
-		
-		//성별 선택
-		else if(item.equals("성별")) //선택박스에서 전체 선택
-		{
-			SexSearch(n); //전체 검색 메소드 호출
-		}
-		
-		//삽입 옵션
-		if(item.equals("삽입")) {
-				
-			Insert(n); //삽입 함수에 문자열 n 넣어 실행
-		}
-		
-		//삭제 옵션
-		else if(item.equals("삭제")) {
-					
-			nameDelete(n); // 삭제함수 실행
-		}		
-		
-		//갱신 옵션
-		else if(item.equals("갱신")) {
-					
-		}
-		
-	}
-	
-
-}
-
-
-//문자열 스플릿 메서드
->>>>>>> 6a2fababb3697996133c69b26731bd191a20ff63
-
-	button = new Button("�Է�");
-	add(button);
 	button.addActionListener(this);
 }
 
 
-<<<<<<< HEAD
-//Action event handle (���� ����)
+
+
+//Action event handle (쿼리 선택)
 public void actionPerformed(ActionEvent ae) {
 	Connection con = null;
 	Statement stmt = null;
 	
 	String st = ae.getActionCommand();
+	String item = search.getSelectedItem();
 	
-	String n = tname.getText();
-	//String a = tage.getText();
-	int a = Integer.parseInt(tage.getText()); //���ڿ��� ������ ��ȯ
-	String i = tid.getText();
-	String p = tpass.getText();
-	String e = tmail.getText();
-	String ph = tphone.getText();
+	String opt = ae.getActionCommand();
+	String item1 = option.getSelectedItem();
 	
-	Insert1(n, a, i, p, e, ph);
+	String n = textField.getText();
+if(item.equals("전체") && item1.equals("--") )
+{
+	TotalgetDBSearch(); //전체 검색 메소드 호출
 }
 
+else if (item.equals("이름") && item1.equals("--") )
+{
+	NamegetDBSearch(n); //이름 검색 메소드 호출
+}
 
-//������ ���� �޼ҵ�
-private void Insert1(String n, int a, String i, String p, String e, String ph) {
-=======
+else if (item.equals("나이") && item1.equals("--") )
+{
+	AgeSearch(n); //나이 검색 메소드 호출
+}
+
+else if (item.equals("성별") && item1.equals("--") )
+{
+	SexSearch(n); //전체 검색 메소드 호출
+}
+
+else if (item.equals("--") && item1.equals("삽입") )
+{
+	Insert(n);
+}
+
+else if (item.equals("--") && item1.equals("삭제") )
+{
+	nameDelete(n);
+}
+else if (item.equals("--") && item1.equals("갱신") )
+{
+	updatee();
+}
+
+}//action end
+
+//스플릿 메서드
+
+/*
+public void splitString(String n) {
+int i = 0;
+String []arr = new String[3];
+StringTokenizer token =new StringTokenizer(n,",");
+	while(token.hasMoreTokens()) {
+	arr[i] = token.nextToken();
+	i++;
+	}
+}
+	*/
+
+
 
 
 //전체검색 메소드
@@ -276,6 +192,8 @@ private void NamegetDBSearch(String n)//이름 검색
 		
 		ResultSet result = stmt.executeQuery("SELECT * FROM customer WHERE name = '"+n+"'"); //뒤에 입력 스트링 붙이기
 
+		
+		
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
@@ -404,7 +322,6 @@ private void SexSearch(String s)//나이 검색
 //private void Insert(String name, String age, String sex)
 //데이터 삽입 메소드
 private void Insert(String n) {
->>>>>>> 6a2fababb3697996133c69b26731bd191a20ff63
 	try {
 		Connection con;
 		Statement stmt;
@@ -415,11 +332,8 @@ private void Insert(String n) {
 		stmt = con.createStatement();
 		
 		
-<<<<<<< HEAD
-		//������ ���̺��� ���� ����
-		stmt.executeQuery("INSERT INTO hallym VALUES('"+n+"',"+ a +",'" + i + "','" + p+ "','" +e+ "','" + ph +"')");
-		
-=======
+
+		Area.setText("Insert complete\n"); //안내문구 출력
 		
 		// 문자열 parsing
 		int i = 0;
@@ -441,10 +355,11 @@ private void Insert(String n) {
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		
-		Area.insertText("\nInsert Complete.\n", 0); //오류가 뜨지만 쿼리는 작동한다. 오류때문에 이하 문구 출력이 안 되는거 같음.
+		
+		
+		//insertText("Insert Complete.\n", 0); //오류가 뜨지만 쿼리는 작동한다. 오류때문에 이하 문구 출력이 안 되는거 같음.
 		//텍스트 area 초기화
 
->>>>>>> 6a2fababb3697996133c69b26731bd191a20ff63
 		
 		//작업 종료 후 statement, connection 객체 닫기
 		stmt.close();
@@ -459,10 +374,7 @@ private void Insert(String n) {
 	}
 }
 
-}//AppletEx1 end
 
-<<<<<<< HEAD
-=======
 //데이터 삭제 메소드
 void nameDelete(String r) {
 	
@@ -475,6 +387,8 @@ void nameDelete(String r) {
 		stmt = con.createStatement();
 		//연결된 DB문에서 질의문 작성을 위한 객체 생성
 		
+		Area.setText("Delete Complete.");
+		
 		stmt.executeQuery("delete FROM customer WHERE name = '"+r+"'");
 		//쿼리문
 
@@ -484,7 +398,7 @@ void nameDelete(String r) {
 		Area.replaceText(" ", 0, c);
 		*/
 		
-		Area.setText("Delete Complete.");
+		
 		
 		//종료 및 공간확보 시작
 		stmt.close();
@@ -498,7 +412,50 @@ void nameDelete(String r) {
 
 
 //갱신 메소드 (갱신 시 마다 나이 1씩 추가)
+void updatee() {
+	
+	try {
+		Connection con = null; //사용할 연결 초기화
+		Statement stmt = null; //stmt 객체 초기화
+		
+		con = DriverManager.getConnection(url, user, pass); //드라이버 매니저 접속 정보 입력
+			con.setCatalog("20155204"); // 접속 테이블 경로(최상위 경로)
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+			//업데이트를 위한 스크롤 이동 옵션과 커서 업데이트 가능 옵션 부여
+			
+			Area.setText("Update Complete.");
+			
+			ResultSet result = stmt.executeQuery("SELECT * FROM customer"); //쿼리 결과 result에 저장
+			
+			String count = Area.getText();
+			int c = count.length();
+			Area.replaceText(" ", 0, c);
+
+			
+			while(result.next()) //순차로 읽ㅇ
+			{
+				int age = result.getInt(2);
+				
+				result.absolute(2); //2열로 커서 이동
+				result.updateInt("age",age+1); //age 1추가
+				result.updateRow(); //갱신
+				result.refreshRow(); //화면 갱신
+
+			}
+			
+			con.close();
+			stmt.close();
+		//작업 종료 및 공간 확보
+		//작업 종료 및 공간 확보
+
+		
+		
+	}//try
+	catch(SQLException se) {
+		System.err.println(se.getMessage());
+	}
+
+}//updatee
 
 
 }// 전체 종료
->>>>>>> 6a2fababb3697996133c69b26731bd191a20ff63
