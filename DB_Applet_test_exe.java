@@ -1,5 +1,5 @@
 /// Applet_test_실행기
-///주석 달고 코드 정리필요 need to optimize
+
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
