@@ -1,27 +1,24 @@
-///ÃÖÁ¾ ÆíÁıÀÏ 181119
-///ÁÖ¼®´Ş°í ÄÚµå Á¤¸®ÇÊ¿ä need to optimize
+///ìµœì¢… í¸ì§‘ì¼ 181119
+///ì£¼ì„ë‹¬ê³  ì½”ë“œ ì •ë¦¬í•„ìš” need to optimize
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
 import java.sql.*;
 import java.util.StringTokenizer;
 
+//ë©”ì¸ applet ì •ì˜
 public class AppletEx1 extends Applet implements ActionListener{
-/*	Choice search; //°Ë»ö Á¶°Ç ¼±ÅÃ¹Ú½º ¼±¾ğ
-	Choice option; //±â´É ¼±ÅÃ ¹Ú½º ¼±¾ğ
-*/
-	//Label label;
 
-	Label lname; //¶óº§ ¼±¾ğ
+	//ì‚¬ìš©í•  ë¼ë²¨ ì„ ì–¸
+	Label lname; 
 	Label lage;
 	Label lid;
 	Label lpass;
 	Label lmail;
 	Label lphone;
 
-	//TextField textField;
-
-	TextField tname; //°ªÀ» ÀÔ·Â¹ŞÀ» ÅØ½ºÆ® ÇÊµå ¼±¾ğ
+	//ê°’ì„ ì…ë ¥ë°›ì„ í…ìŠ¤íŠ¸ í•„ë“œ ì„ ì–¸
+	TextField tname;
 	TextField tage;
 	TextField tid;
 	TextField tpass;
@@ -29,107 +26,128 @@ public class AppletEx1 extends Applet implements ActionListener{
 	TextField tphone;
 
 	
-	TextArea Area; //°á°ú °ªÀ» Ãâ·ÂÇÒ ÅØ½ºÆ® ¿¡¸®¾î ¼±¾ğ
-	Button button; //ÀÔ·Â¹öÆ° ¼±¾ğ
+	TextArea Area; //ê²°ê³¼ ê°’ì„ ì¶œë ¥í•  í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ì„ ì–¸
+	Button button; //ì…ë ¥ë²„íŠ¼ ì„ ì–¸
 
 
 private String url = "jdbc:inetdae7://210.115.229.77:2433";
-// ÁÖ¼Ò °ª ÀúÀå º¯¼ö
+// ì£¼ì†Œ ê°’ ì €ì¥ ë³€ìˆ˜, merliaì‚¬ìš©í•˜ë¯€ë¡œ inetdae7 ê¸°ìˆ 
+	
 private String user = "20155204";
-// ID °ª ÀúÀå º¯¼ö
+// ID ê°’ ì €ì¥ ë³€ìˆ˜
+	
 private String pass = "Ecks0407@";
-// PW °ª ÀúÀå º¯¼ö
+// PW ê°’ ì €ì¥ ë³€ìˆ˜
 
 
-//JDBC µå¶óÀÌ¹ö ·Îµù
+//JDBC ë“œë¼ì´ë²„ ë¡œë”©
 public void init() {
 	try{
 		Class.forName("com.inet.tds.TdsDriver");
 	}
 	catch(ClassNotFoundException e) {
 		System.out.println("Class Loading Failed");
-		//·Îµù ½ÇÆĞ½Ã Ãâ·Â ¸Ş½ÃÁö
+		//ë¡œë”© ì‹¤íŒ¨ì‹œ ì¶œë ¥ ë©”ì‹œì§€
 	}
 }
 
 
-//Interface ¼³Á¤
+//Interface ì„¤ì •
 public void start() {
-	setLayout(new FlowLayout()); // ·¹ÀÌ¾Æ¿ô ¹èÄ¡ÀÚ
+	setLayout(new FlowLayout()); // ë ˆì´ì•„ì›ƒ ë°°ì¹˜ì
 	
-	lname = new Label("ÀÌ ¸§"); // ¾È³»¹®±¸
+	//ì´ë¦„ ë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
+	lname = new Label("ì´ ë¦„"); 
 	add(lname);
 	tname = new TextField(10);
 	add(tname);
 	
-	lage = new Label("³ª ÀÌ");
-	add(lage); // ¶óº§Ãß°¡
+	//ë‚˜ì´ ë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
+	lage = new Label("ë‚˜ ì´");
+	add(lage); // ë¼ë²¨ì¶”ê°€
 	tage = new TextField(10);
 	add(tage);
 	
+	//ID ë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
 	lid = new Label("ID");
 	add(lid);
 	tid = new TextField(10);
 	add(tid);
 	
+	//password ë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
 	lpass = new Label("password");
 	add(lpass);
 	tpass = new TextField(10);
 	add(tpass);
 	
+	//emailë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
 	lmail = new Label("e-mail");
 	add(lmail);
 	tmail = new TextField(10);
 	add(tmail);
 	
+	//phone ë¼ë²¨, í…ìŠ¤íŠ¸ í•„ë“œ ì¶”ê°€
 	lphone = new Label("phone");
 	add(lphone);
 	tphone = new TextField(10);
 	add(tphone);
 
-
-	button = new Button("ÀÔ·Â");
+	//ì…ë ¥ ë²„íŠ¼ ì¶”ê°€ ë° ë²„íŠ¼ì•¡ì…˜í•¨ìˆ˜ ì§€ì •
+	button = new Button("ì…ë ¥");
 	add(button);
 	button.addActionListener(this);
 }
 
 
-//Action event handle (Äõ¸® ¼±ÅÃ)
+//Action event handle (ì¿¼ë¦¬ ì„ íƒì˜µì…˜)
 public void actionPerformed(ActionEvent ae) {
+	
+	//ì»¤ë„¥ì…˜ ê°ì²´ ì´ˆê¸°í™”
 	Connection con = null;
+	//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ ê°ì²´ ì´ˆê¸°í™”
 	Statement stmt = null;
 	
+	//ë°˜ì‘í•¨ìˆ˜ ì¸ìê°’ stì— ì €ì¥
 	String st = ae.getActionCommand();
 	
+	//nameí…ìŠ¤íŠ¸ í•„ë“œ ê°’ nì— ì €ì¥
 	String n = tname.getText();
-	//String a = tage.getText();
-	int a = Integer.parseInt(tage.getText()); //¹®ÀÚ¿­À» Á¤¼ö·Î º¯È¯
+	
+	//age í…ìŠ¤íŠ¸ ì—ë¦¬ì–´ ê°’ì„ ì •ìˆ˜ë¡œ ë°˜í™˜í•˜ì—¬ aì— ì €ì¥
+	int a = Integer.parseInt(tage.getText()); //ë¬¸ìì—´ì„ ì •ìˆ˜ë¡œ ë³€í™˜
+	
+	//ìˆœì„œëŒ€ë¡œ id, password, mail, phone í…ìŠ¤íŠ¸ ë°›ì•„ ì €ì¥
 	String i = tid.getText();
 	String p = tpass.getText();
 	String e = tmail.getText();
 	String ph = tphone.getText();
 	
+	//ì‚½ì… í•¨ìˆ˜ì— ì¸ì ì „ë‹¬
 	Insert1(n, a, i, p, e, ph);
-}
+}//actionPerformed end
 
 
-//µ¥ÀÌÅÍ »ğÀÔ ¸Ş¼Òµå
+//ë°ì´í„° ì‚½ì… ë©”ì†Œë“œ
 private void Insert1(String n, int a, String i, String p, String e, String ph) {
 	try {
+		//ì»¤ë„¥ì…˜, ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ ê°ì²´ ì„ ì–¸
 		Connection con;
 		Statement stmt;
-		//Connection °´Ã¼¸¦ »ç¿ëÇÏ¿© DB¿¡ ¿¬°áÀ» ¼³Á¤
+		
+		//Connection ê°ì²´ë¥¼ ì‚¬ìš©í•˜ì—¬ DBì— ì—°ê²°ì„ ì„¤ì •
 		con = DriverManager.getConnection(url, user, pass);
+		//ì ‘ê·¼ DB ì§€ì •(ì ‘ì† ê³„ì •ì˜ ìµœìƒìœ„ ê·¸ë£¹ ì´ë¦„_DBì§€ì •)
 		con.setCatalog(user);
-		//ÁúÀÇ¹® ÀÛ¼ºÀ» À§ÇÑ statement °´Ã¼ »ı¼º
+		
+		//ì§ˆì˜ë¬¸ ì‘ì„±ì„ ìœ„í•œ statement ê°ì²´ ìƒì„±
 		stmt = con.createStatement();
 		
 		
-		//»ı¼ºµÈ Å×ÀÌºí¿¡ °ªÀ» »ğÀÔ
+		//ìƒì„±ëœ í…Œì´ë¸”ì— ê°’ì„ ì‚½ì…
 		stmt.executeQuery("INSERT INTO hallym VALUES('"+n+"',"+ a +",'" + i + "','" + p+ "','" +e+ "','" + ph +"')");
 		
 		
-		//ÀÛ¾÷ Á¾·á ÈÄ statement, connection °´Ã¼ ´İ±â
+		//ì‘ì—… ì¢…ë£Œ í›„ statement, connection ê°ì²´ ë‹«ê¸°
 		stmt.close();
 		con.close();
 		
@@ -138,7 +156,7 @@ private void Insert1(String n, int a, String i, String p, String e, String ph) {
 	catch(SQLException se) {
 		System.err.println(se.getMessage());
 		
-		//¿À·ù ¸Ş½ÃÁö °ËÃâ
+		//ì˜¤ë¥˜ ë©”ì‹œì§€ ê²€ì¶œ
 	}
 }
 
