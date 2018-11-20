@@ -1,0 +1,45 @@
+public class arrayEx2to2 {
+
+	public static void main(String []args) {
+		
+	 int num[] = {100, 40, 70, 80, 90, 85, 48, 60, 83, 96};
+	 double arrp[];
+	 arrp = new double[num.length];
+	 double avg=0;
+	 double ppp=0;
+	 double sum =0;
+	 double max=0;
+	 double min = 100;
+	 
+	 //avg
+	 for(int i=0; i<num.length;i++) {
+		 sum += num[i];
+	 }
+	 
+	 avg = sum/num.length;
+	 
+	 
+	 sum = 0;
+	 //표준편차
+	 for(int i=0; i<num.length;i++) {
+		 sum += (num[i]-avg)*(num[i]-avg);
+	}
+	ppp = Math.sqrt(sum/num.length);
+	
+	for(int i =0; i<num.length;i++) {
+		if(max<num[i]) {
+			max = num[i];
+		}
+		
+		if(min>num[i]) {
+			min = num[i];
+		}
+	}
+	
+	System.out.println("평균 : " + avg);
+	System.out.println("표준편차 : "+ppp);
+	System.out.println("Max : "+ max);
+	System.out.println("Min : " + min);
+		
+	}
+}
