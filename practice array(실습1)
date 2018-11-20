@@ -1,0 +1,11 @@
+public class arrayEx2to1 {
+
+	public static void main(String []args) {
+		char name[] = {'H','y','e','o','n',' ','K','a','n','g'};
+		
+		
+		for(char s : name) {
+			System.out.print(name[s]);
+		}
+	}
+}
