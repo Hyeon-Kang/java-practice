@@ -1,0 +1,16 @@
+public class arrayEx1to2 {
+	
+	public static void main(String []args) {
+	
+		char arr[];
+		arr = new char[26];
+		int alp = 97;
+		for(int i=0;i<26;i++) {
+			
+			arr[i] = (char)alp;
+			alp++;
+			System.out.println(arr[i]);
+		}
+	}
+	
+}
