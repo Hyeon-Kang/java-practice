@@ -1,0 +1,13 @@
+public class arrayEx1to3 {
+	
+	public static void main(String []args) {
+		int num = 10;
+		int arr[];
+		arr = new int[20];
+		
+		for (int i =0; i <20;i++) {
+			arr[i] = num*(i+1);
+			System.out.println(arr[i]);
+		}
+	}
+}
