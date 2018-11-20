@@ -1,0 +1,38 @@
+public class arrayEx1to4 {
+
+	public static void main(String []args) {
+		
+		int odd[], even[];
+		odd = new int[50];
+		even = new int[50];
+		int a=0;
+		int b=0;
+		
+		System.out.println("1~100 중 홀수만 출력");
+		for(int num=1;num<101;num++) {
+			
+			if(num%2==0) {
+				even[a]=num;
+				a++;
+			}
+			else {
+				odd[b]=num;
+				b++;
+			}
+			
+			
+		}
+		
+		System.out.println("훌수 배열 출력");
+		for(int pod=0; pod<50;pod++) {
+			System.out.println(odd[pod]);
+		}
+		
+		System.out.println();
+		
+		System.out.println("짝수 배열 출력");
+		for(int pev=0; pev<50;pev++) {
+			System.out.println(even[pev]);
+		}
+	}
+}
