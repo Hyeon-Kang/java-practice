@@ -1,4 +1,6 @@
-///최종 편집일 181119
+///최종 편집일 181120
+
+//사용할 땐 password 변수 값 변경할 것!
 
 import java.awt.*;
 import java.awt.event.*;
