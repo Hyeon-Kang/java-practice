@@ -1,3 +1,6 @@
+///최종수정일자 181120
+// 실행시 password변수 값 넣을 것!
+
 /// Applet_test_실행기
 
 import java.awt.*;
