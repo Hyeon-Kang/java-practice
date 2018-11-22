@@ -1,0 +1,39 @@
+//배열을 통한 단순한 그래프 표현
+
+import java.util.*;
+
+public class ArrayPractice {
+
+	public static void main(String argsp[]) {
+		int score[]	= {100,60,70,80,90};
+		char graph[][]= new char[score.length][];
+		
+		
+		//각 점수에 해당하는 그래프 그리기
+		for(int i =0; i<graph.length; i++) {
+			int count = score[i]/10;
+			graph[i] = new char[count];
+			for (int j =0; j<graph[i].length; j++) {
+				graph[i][j]='*';
+			}
+		}
+		//출력
+		for (int i=0; i<graph.length; i++) {
+			System.out.print(score[i] + ":");
+			for (int j = 0; j<graph[i].length; j++) {
+				System.out.print(graph[i][j]);
+				
+			}
+			System.out.println();
+		}
+		
+	}
+}
+
+/*결과예제
+100:**********
+60:******
+70:*******
+80:********
+90:*********
+*/
