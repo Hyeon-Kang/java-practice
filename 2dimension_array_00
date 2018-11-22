@@ -1,0 +1,25 @@
+///2dimension array practice
+///각 행의 크기가 
+public class array2test {
+
+	public static void main(String []args) {
+		int value[][] = new int[3][];
+		
+		value[0] = new int[3];
+		value[1] = new int[5];
+		value[2] =new int[2];
+		
+		for(int i = 0; i<value.length; i++){
+			for (int j = 0; j<value[i].length; j++) {
+				value[i][j] = j+1;
+			}
+		}
+		
+		for(int i = 0; i < value.length; i++) {
+			for(int j=0; j<value[i].length; j++) {
+				System.out.print(value[i][j]);
+			}
+			System.out.println();
+		}
+	}
+}
