@@ -1,0 +1,80 @@
+//report 14
+
+import java.util.Scanner;
+import java.util.*;
+public class RandomArraytest {
+
+	public static void main(String []args) {
+		
+		Scanner scan = new Scanner(System.in);
+		Random rand = new Random();
+		
+		System.out.println("n차 정방행렬 생성.");
+		System.out.println("차수를 입력하시오.");
+		
+		int dimen = scan.nextInt();
+		
+		int arr[][] = new int[dimen][dimen];
+		
+		//배열 선언(모든 인자를 0으로 초기화)
+		for(int i =0; i<arr.length; i++) {
+			
+			for(int j =0; j<arr[i].length; j++) {
+				arr[i][j]=0;
+			}
+		}
+		
+		//검사
+		for(int i =0; i<arr.length; i++) {
+			for(int j =0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+				
+
+			System.out.println("배열에 넣을 값의 개수 입력.");
+			System.out.println("%입력 값은 열의 크기를 넘으면 안 됨!% 현재 지정된 열의 값 : "+dimen);
+			int an = scan.nextInt();
+			if(an>dimen) {
+				while(true) {
+					System.out.println("범위 오류! 다시 입력하시오.");
+					an = scan.nextInt();
+					if(an<=dimen) {break;}
+				}
+			}//범위오류 if 분기
+			
+			else {
+				//랜덤 값 넣기
+				for(int i=0; i<an; i++) {
+					int tuple = rand.nextInt(dimen);
+					int colum = rand.nextInt(dimen);
+					int num = rand.nextInt(20);
+					
+					
+					if(arr[tuple][colum] == 0) {
+						i--;
+					}
+					
+					else {
+						arr[tuple][colum] = num;
+					}
+				}//랜덤 값 넣기 반복문 종료
+			}//범위오류 else 분기 종료
+			
+			for(int i =0; i<arr.length; i++) {
+				for(int j =0; j<arr[i].length; j++) {
+					System.out.print(arr[i][j]+" ");
+				}
+				System.out.println();
+			}
+
+		
+		
+		// 배열 출력하기
+		
+		
+		
+	}//main 함수 종료
+	
+}
