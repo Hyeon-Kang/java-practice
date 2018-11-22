@@ -1,0 +1,52 @@
+//실습02문제
+public class array_cal {
+
+	public static void main(String []args) {
+		
+		int arr[][] = new int [5][5];
+		int num=1;
+		
+		
+		
+		
+		//배열 선언
+		for(int i =0; i<arr.length; i++) {
+			for(int j =0; j<arr[i].length; j++) {
+				arr[i][j]=num++;
+			}
+		}
+		
+		//행의 합
+		System.out.println("행의 합");
+		for(int i =0; i<arr.length; i++) {
+			int st=0;
+			for(int j =0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j]+" ");
+				st += arr[i][j];
+			}
+			System.out.println("= "+st);
+		}
+		System.out.println();
+		
+		//열의 합
+		System.out.println("열의 합");
+		for(int i =0; i<arr.length; i++) {
+			int st=0;
+			for(int j =0; j<arr[i].length; j++) {
+				System.out.print(arr[j][i]+" ");
+				st += arr[j][i];
+			}
+			System.out.println("= "+st);
+		}
+		
+		System.out.println();
+		//주대각 인자의 합
+		System.out.println("주대각 인자의 합");
+		int st=0;
+		for(int i =0; i<arr.length; i++) {
+			System.out.print(arr[i][i]+" ");
+			st += arr[i][i];
+		}
+		System.out.println("= "+st);
+	}
+}
