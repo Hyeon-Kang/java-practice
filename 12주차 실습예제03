@@ -1,0 +1,24 @@
+//  실습예제 랜덤변수 넣기
+import java.util.*;
+
+public class ArrayPractice {
+
+	public static void main(String argsp[]) {
+		int a[][]= new int[3][];
+		Random rand = new Random();
+		
+		a[0] = new int[3];
+		a[1] = new int[5];
+		a[2] = new int[2];
+		
+		for(int i =0; i<a.length; i++) {
+			for(int j = 0; j<a[i].length; j++) {
+				a[i][j] = rand.nextInt(10);
+				System.out.print(a[i][j]);
+				
+			}
+			System.out.println();
+		}
+		
+	}
+}
