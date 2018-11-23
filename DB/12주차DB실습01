@@ -3,6 +3,7 @@
 //주석 및 코드 최적화 작업 
 
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,7 +22,6 @@ public class DB11_01 {
 	ResultSet rs =null;
 	//쿼리 수행 결과 저장 변수
 	String query1 = "Select Age From Titanic Where Survived = '1' and Embarked = 'Q' and Age != 'null'";
-	//Emb = Q,S,C   "Select Age From Titanic Where Survived = '1' and Embarked = 'Q'"; 이후 순차적으로 sum+=attri, count++로 합계 후 저장. null 제거
 	String query2 = "Select Age From Titanic Where Survived = '1' and Embarked = 'S' and Age != 'null'";
 	String query3 = "Select Age From Titanic Where Survived = '1' and Embarked = 'C' and Age != 'null'";
 	String query4 = "Select Age From Titanic Where Survived = '1' and Embarked = 'null'";
@@ -91,7 +91,7 @@ public class DB11_01 {
 		avg = sum/count;
 		System.out.println("Q 승선위치 생존자 평균 나이 : " + avg);
 		System.out.println("집계 생존인원(null제외) : " + count);
-		System.out.println("나이 합산 : "+sum);
+		
 		System.out.println();
 	}//executeQ
 	
@@ -127,7 +127,7 @@ public class DB11_01 {
 		avg = sum/count;
 		System.out.println("S 승선위치 생존자 평균 나이 : " + avg);
 		System.out.println("집계 생존인원(null제외) : " + count);
-		System.out.println("나이 합산 : "+sum);
+	
 		System.out.println();
 	}//executeS
 	
@@ -166,7 +166,7 @@ public class DB11_01 {
 		avg = sum/count;
 		System.out.println("C 승선위치 생존자 평균 나이 : " + avg);
 		System.out.println("집계 생존인원(null제외) : " + count);
-		System.out.println("나이 합산 : "+sum);
+	
 		System.out.println();
 	}//executeC
 	
@@ -203,7 +203,7 @@ public class DB11_01 {
 		avg = sum/count;
 		System.out.println("승선위치가 확인되지 않은 생존자 평균 나이 : " + avg);
 		System.out.println("집계 생존인원(null제외) : " + count);
-		System.out.println("나이 합산 : "+sum);
+	
 		System.out.println();
 	}//executeNull
 	
