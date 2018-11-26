@@ -1,5 +1,5 @@
-//12주차 실습 03
-//1등급 선실 탑승자가 차지하는 전체 생존자의 비율은?
+//12주차 과제 01
+//사망자 남, 녀 비율 계산하기
 
 
 import java.sql.Connection;
@@ -48,7 +48,7 @@ public class prac03 {
 	//생성자 초기화(접속)
 	public prac03() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "");
+			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "Ecks0407@");
 			//DriverManager에 필요한 값 저장 (주소:포트, ID, Pw)
 			con.setCatalog("20155204");
 			//접근 DB명
