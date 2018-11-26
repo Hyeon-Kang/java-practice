@@ -48,7 +48,7 @@ public class prac03 {
 	//생성자 초기화(접속)
 	public prac03() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "Ecks0407@");
+			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "비밀번호1");
 			//DriverManager에 필요한 값 저장 (주소:포트, ID, Pw)
 			con.setCatalog("20155204");
 			//접근 DB명
