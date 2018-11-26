@@ -33,7 +33,7 @@ public class DB11_03 {
 	
 	public DB11_03() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "비밀번호");
+			con = DriverManager.getConnection("jdbc:sqlserver://210.115.229.77:2433", "20155204", "비밀번호1");
 			//DriverManager에 필요한 값 저장 (주소:포트, ID, Pw)
 			con.setCatalog("20155204");
 			//접근 DB명
@@ -90,9 +90,7 @@ public class DB11_03 {
 					 	} 
 					catch(Exception e) {
 				            e.printStackTrace();
-				        }
-
-					 
+				        }	 
 			}while(rs.next());
 				//반복수행
 			System.out.println("사망자 명단 출력 완료.");
