@@ -21,26 +21,28 @@ public class DB11_01 {
 	//연산에 필요한 값 저장
 	ResultSet rs =null;
 	//쿼리 수행 결과 저장 변수
-	String query1 = "Select Age From Titanic Where Survived = '1' and Embarked = 'Q' and Age != 'null'";
-	String query2 = "Select Age From Titanic Where Survived = '1' and Embarked = 'S' and Age != 'null'";
-	String query3 = "Select Age From Titanic Where Survived = '1' and Embarked = 'C' and Age != 'null'";
-	String query4 = "Select Age From Titanic Where Survived = '1' and Embarked = 'null'";
+	String query1 = "Select Age From Titanic Where Survived = '1' and Embarked = 'Q' and Age != 'null'"; //탑승구역 Q
+	String query2 = "Select Age From Titanic Where Survived = '1' and Embarked = 'S' and Age != 'null'"; //탑승구역 S
+	String query3 = "Select Age From Titanic Where Survived = '1' and Embarked = 'C' and Age != 'null'"; //탑승구역 C
+	String query4 = "Select Age From Titanic Where Survived = '1' and Embarked = 'null'"; //탑승구역 미확인
 	//질의 저장 
 	
+	//필요한 변수 선언
 	double sum =0;
 	int count =0;
 	double avg =0;
 	String Emb ="";
 	
+	//메인함수
 	public static void main(String [] args)
 	{
 		DB11_01 ex4 = new DB11_01();
 		//객체 지정
 		
-		ex4.ExecuteQ();
-		ex4.ExecuteS();
-		ex4.ExecuteC();
-		ex4.ExecuteNull();
+		ex4.ExecuteQ(); //탑숭구역Q
+		ex4.ExecuteS(); //탑승구역S
+		ex4.ExecuteC(); //탑승구역C
+		ex4.ExecuteNull(); //탑승구역 미확인
 	}// main
 	
 	public DB11_01() {
@@ -69,17 +71,14 @@ public class DB11_01 {
 		count = 0;
 		avg = 0;
 		
+		//순서대로 읽어들이기
 		if(rs.first()) {
 			do {
-				String getst = rs.getString(1);
+				String getst = rs.getString(1); //1열 데이터 불러옴
 		
 					double age = Double.parseDouble(getst);
 					count++;
 					sum += age;
-				
-					// 행마다 순차적으로 값 저장. 1행 1열, 1행 2열.....
-				
-				
 				}while(rs.next());
 				//반복수행
 			}
@@ -88,7 +87,7 @@ public class DB11_01 {
 			//오류 검출
 			System.err.println(se.getMessage());
 		}
-		avg = sum/count;
+		avg = sum/count; //평균 구하기
 		System.out.println("Q 승선위치 생존자 평균 나이 : " + avg);
 		System.out.println("집계 생존인원(null제외) : " + count);
 		
@@ -112,10 +111,6 @@ public class DB11_01 {
 					double age = Double.parseDouble(getst);
 					count++;
 					sum += age;
-				
-					// 행마다 순차적으로 값 저장. 1행 1열, 1행 2열.....
-				
-				
 				}while(rs.next());
 				//반복수행
 			}
@@ -151,10 +146,6 @@ public class DB11_01 {
 					double age = Double.parseDouble(getst);
 					count++;
 					sum += age;
-				
-					// 행마다 순차적으로 값 저장. 1행 1열, 1행 2열.....
-				
-				
 				}while(rs.next());
 				//반복수행
 			}
@@ -188,9 +179,6 @@ public class DB11_01 {
 					double age = Double.parseDouble(getst);
 					count++;
 					sum += age;
-				
-					// 행마다 순차적으로 값 저장. 1행 1열, 1행 2열.....
-				
 				
 				}while(rs.next());
 				//반복수행
