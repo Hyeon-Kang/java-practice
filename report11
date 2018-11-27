@@ -1,0 +1,92 @@
+//외부클래스에 생성해야 함
+public enum DrinkEnum {A,B,C,D,E;}
+=====================================================
+
+
+import java.util.Scanner;
+
+class Drink{
+	private String product;
+	private int price;
+	DrinkEnum nname ;
+	static final int Max =2000;
+	
+	
+	public Drink() {
+		this("",0);
+	}
+	
+	public Drink(String name, int p) {
+		product = name;
+		price = p;
+	}
+	
+	public Drink(DrinkEnum n, int p) {
+		product = n.toString();
+		price = p;
+	}
+	
+	public String getname() {
+		return this.product;
+	}
+	
+	public int getprice() {
+		return this.price;
+	}
+	
+	public String toString() {
+		return "상품명:"+this.product+", 금액:"+this.price;
+	}
+	
+}
+public class DrinkArr {
+
+	public static void main(String []args) {
+		
+		Scanner scan = new Scanner(System.in);
+		
+		Drink dlist[] = new Drink[5];
+			dlist[0]= new Drink(DrinkEnum.A, 500);
+			dlist[1]= new Drink(DrinkEnum.B, 1500);
+			dlist[2]= new Drink(DrinkEnum.C, 800);
+			dlist[3]= new Drink(DrinkEnum.D, 1000);
+			dlist[4]= new Drink(DrinkEnum.E, 500);
+			
+		System.out.println("모든 상품 출력");
+		for(int i =0; i<5; i++) {
+			System.out.println(dlist[i].toString());
+		}
+		
+		while(true) {
+		boolean flag = false;
+			//q 눌러서 종료, flag로 일치하지 않는 품목 처리
+		System.out.println("주문 처리(주문 항목에 q 입력시 종료");
+		System.out.print("주문 항목:");
+		String ProductName = scan.next();
+		if(ProductName.equals("q")) {
+			break;
+		}
+		else {
+			
+		for(int i=0;i<5;i++) {
+			if(dlist[i].getname().equals(ProductName) ) {
+				flag = true;
+				System.out.print("주문 수량:");
+				int order = scan.nextInt();
+				System.out.println("선택음료:"+dlist[i].getname()+", 수량:"+order+", 금액 출력:"+ (dlist[i].getprice()*order) );
+			}
+		
+		}//for end
+		}//종료 분기 end
+		
+		if(flag==false) {System.out.println("해당 상품을 찾을 수 없습니다.");
+		}
+		}//while end
+		
+
+		
+	}//main end
+	
+	
+}//DrinkArr end
+
