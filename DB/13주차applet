@@ -402,7 +402,7 @@ private void Ex6query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("Select t.ID from instructor i left outer join course c on i.dept_name =c.dept_name right outer join takes t on c.course_id = t.course_id where i.NAME = 'Einstein'"); 
-		// // instructor 과course 테이블을 ID컬럼 기준으로 left outer join 한 결과를 takes 테이블과 course_id 컬럼을 기준으로 right outer join 한 뒤 NAME 컬럼이 Einstein인 행의 모든 정보출력.
+		// instructor 과course 테이블을 ID컬럼 기준으로 left outer join 한 결과를 takes 테이블과 course_id 컬럼을 기준으로 right outer join 한 뒤 NAME 컬럼이 Einstein인 행의 모든 정보출력.
 		
 		//텍스트 필드 초기화
 		String count = Area.getText();
