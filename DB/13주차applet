@@ -39,23 +39,16 @@ public void init() {
 }//init end(로그인)
 
 
-
-
 //Interface 설정
-
 public void start() {
 	setLayout(new FlowLayout()); // 레이아웃 배치자
 
 	//이름 라벨, 텍스트 필드 추가
 	lquery = new Label("질의 선택"); 
 	add(lquery);
-	/*
-	tquery = new TextField(30);
-	add(tquery);
-	*/
 	button = new Button("입력");
 	add(button);
-	button.addActionListener(this);
+	button.addActionListener(this); //버튼액션 지정
 	
 	option = new Choice(); //선택 (체크박스)
 	option.add("=실습1 이하선택=");
@@ -87,7 +80,7 @@ public void actionPerformed(ActionEvent ae) {
 	
 	//분기
 	if(item.equals("Left")) {
-		Leftouterjoin();
+		Leftouterjoin(); //
 	}
 	else if(item.equals("Right")){
 		Right();
@@ -111,7 +104,6 @@ public void actionPerformed(ActionEvent ae) {
 		Ex7query();
 	}
 	else {}
-	
 }//action end
 	
 //left join
@@ -130,8 +122,7 @@ private void Leftouterjoin() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("SELECT Course.course_id, Section.course_id FROM Course LEFT OUTER JOIN Section on Course.course_id = Section.course_id"); //쿼리 수정 필요
-		
-		//FROM 기준테이블 별칭 LEFT OUTER JOIN 조인테이블 별칭 ON 기준테이블별칭.기준키 = 조인테이블별칭.기준키 .....
+		// course 테이블과 section테이블을 course_id 컬럼을 기준으로 left outer join함
 		
 		//텍스트 필드 초기화
 		String count = Area.getText();
@@ -139,7 +130,6 @@ private void Leftouterjoin() {
 		Area.replaceText(" ", 0, c);
 		Area.setText("Left Outer Join ...\n"); //안내문구 출력
 		
-		/////////////////////////////
 		while(result.next()) //순차로 읽어들임
 		{
 			//getstring의 번호 값의 열 데이터를 저장
@@ -178,15 +168,14 @@ private void Right() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("SELECT Section.course_id, Course.course_id FROM Course RIGHT OUTER JOIN Section on Section.course_id = Course.course_id"); 
+		//section과 course 테이블을 course_id를 기준삼아 right outer join
+		
 		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		Area.setText("Right Outer Join ...\n"); //안내문구 출력
 		
-		
-		/////////////////////////////
-
 		while(result.next()) //순차로 읽어들임
 		{
 			//getstring의 번호 값의 열 데이터를 저장
@@ -228,16 +217,13 @@ private void Ex2query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("SELECT ID, NAME, count(semester) as '강의 수' From inst_course group by ID, NAME"); //쿼리 수정 필요
-		
+		// 요구사항을 모아놓은 뷰에서 ID, NAME, semester의 수를 집계한 '강의 수' 컬럼 출력
 		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
 		Area.replaceText(" ", 0, c);
 		Area.setText("실습2  교수 ID, 성명, 강의 수 출력 ...\n"); //안내문구 출력
-		
-		
-		/////////////////////////////
-
+	
 		while(result.next()) //순차로 읽어들임
 		{
 			//getstring의 번호 값의 열 데이터를 저장
@@ -277,6 +263,7 @@ private void Ex3query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("Select * From courseData Where years=2010 and semester = 'Spring' and dept_name = 'Comp_Sci'"); 
+		// 요구 데이터를 모아놓은 courseData 뷰에서 2010년도 봄에 열린 컴퓨터 공학과 의 모든 데이터를 출력
 
 		//텍스트 필드 초기화
 		String count = Area.getText();
@@ -315,9 +302,7 @@ private void Ex4query() {
 	Connection con = null;
 	Statement stmt = null;
 
-
 	try {
-
 		//드라이버매니저가 접속에 필요한 인자 전달
 		con = DriverManager.getConnection(url, user, pass);
 		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
@@ -327,6 +312,7 @@ private void Ex4query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("Select * From greadAvg"); 
+		// 요구 쿼리를 정리한 뷰 greadAvg의 데이터 출력
 		
 		//텍스트 필드 초기화
 		String count = Area.getText();
@@ -354,17 +340,13 @@ private void Ex4query() {
 	}//Ex4 end
 
 
-
-
 //Ex5 과제1_1
 private void Ex5query() {
 	//커넥션, 스테이트먼트 객체 초기화
 	Connection con = null;
 	Statement stmt = null;
 
-
 	try {
-
 		//드라이버매니저가 접속에 필요한 인자 전달
 		con = DriverManager.getConnection(url, user, pass);
 		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
@@ -374,7 +356,8 @@ private void Ex5query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("select title from course where dept_name = 'Comp_Sci' and credits = 3"); 
-	
+		// course 테이블에서 컴퓨터 공학과 소속에 3학점 수업 명 출력
+		
 		//텍스트 필드 초기화
 		String count = Area.getText();
 		int c = count.length();
@@ -419,6 +402,7 @@ private void Ex6query() {
 
 		//result에 쿼리 실행 결과 전달
 		ResultSet result = stmt.executeQuery("Select t.ID from instructor i left outer join course c on i.dept_name =c.dept_name right outer join takes t on c.course_id = t.course_id where i.NAME = 'Einstein'"); 
+		// // instructor 과course 테이블을 ID컬럼 기준으로 left outer join 한 결과를 takes 테이블과 course_id 컬럼을 기준으로 right outer join 한 뒤 NAME 컬럼이 Einstein인 행의 모든 정보출력.
 		
 		//텍스트 필드 초기화
 		String count = Area.getText();
