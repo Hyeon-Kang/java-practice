@@ -1,0 +1,497 @@
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+import java.sql.*;
+import java.util.StringTokenizer;
+
+//메인 applet 정의
+
+public class DB1301 extends Applet implements ActionListener{
+	//사용할 라벨 선언
+	Label lquery;
+	Choice option; //기능 선택 박스 선언
+	//TextField tquery;
+	TextArea Area; //결과 값을 출력할 텍스트 에리어 선언
+	Button button; //입력버튼 선언
+	
+
+
+private String url = "jdbc:inetdae7://210.115.229.77:2433";
+// 주소 값 저장 변수, merlia사용하므로 inetdae7 기술
+
+private String user = "20155204";
+// ID 값 저장 변수
+
+private String pass = "";
+// PW 값 저장 변수
+
+
+//JDBC 드라이버 로딩
+public void init() {
+	try{
+		Class.forName("com.inet.tds.TdsDriver");
+	}
+	catch(ClassNotFoundException e) {
+		System.out.println("Class Loading Failed");
+		//로딩 실패시 출력 메시지
+	}
+}//init end(로그인)
+
+
+
+
+//Interface 설정
+
+public void start() {
+	setLayout(new FlowLayout()); // 레이아웃 배치자
+
+	//이름 라벨, 텍스트 필드 추가
+	lquery = new Label("질의 선택"); 
+	add(lquery);
+	/*
+	tquery = new TextField(30);
+	add(tquery);
+	*/
+	button = new Button("입력");
+	add(button);
+	button.addActionListener(this);
+	
+	option = new Choice(); //선택 (체크박스)
+	option.add("=실습1 이하선택=");
+	option.add("Left");
+	option.add("Right");
+	option.add("실습2");
+	option.add("실습3");
+	option.add("실습4");
+	option.add("과제1_1");
+	option.add("과제1_2");
+	option.add("과제1_3");
+	add(option); // 선택박스 추가
+	
+	//텍스트 에리어 지정
+	Area = new TextArea(10,50);
+	add(Area);
+}
+
+//Action event handle (쿼리 선택옵션)
+public void actionPerformed(ActionEvent ae) {
+	//커넥션 객체 초기화
+	Connection con = null;
+	//스테이트먼트 객체 초기화
+	Statement stmt = null;
+
+	//option 선택박스로 얻는 데이터 전달
+	String opt = ae.getActionCommand();
+	String item = option.getSelectedItem();
+	
+	//분기
+	if(item.equals("Left")) {
+		Leftouterjoin();
+	}
+	else if(item.equals("Right")){
+		Right();
+	}
+	else if(item.equals("실습2")) {
+		Ex2query();
+	}
+	else if(item.equals("실습3")) {
+		Ex3query();
+	}
+	else if(item.equals("실습4")) {
+		Ex4query();
+	}
+	else if(item.equals("과제1_1")) {
+		Ex5query();
+	}
+	else if(item.equals("과제1_2")) {
+		Ex6query();
+	}
+	else if(item.equals("과제1_3")) {
+		Ex7query();
+	}
+	else {}
+	
+}//action end
+	
+//left join
+private void Leftouterjoin() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+	try {
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("SELECT Course.course_id, Section.course_id FROM Course LEFT OUTER JOIN Section on Course.course_id = Section.course_id"); //쿼리 수정 필요
+		
+		//FROM 기준테이블 별칭 LEFT OUTER JOIN 조인테이블 별칭 ON 기준테이블별칭.기준키 = 조인테이블별칭.기준키 .....
+		
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("Left Outer Join ...\n"); //안내문구 출력
+		
+		/////////////////////////////
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			String Cid = result.getString(1);
+			String Sid = result.getString(2);
+			if(Cid == null) {Cid = "null";}
+			else if(Sid == null) {Sid="null";}
+
+			//출력 형식 지정\
+			String value = "Course_ID : " + Cid + ", Section_ID : " + Sid +"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//left end
+
+//right join
+private void Right() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("SELECT Section.course_id, Course.course_id FROM Course RIGHT OUTER JOIN Section on Section.course_id = Course.course_id"); 
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("Right Outer Join ...\n"); //안내문구 출력
+		
+		
+		/////////////////////////////
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			String Sid = result.getString(1);
+			String Cid = result.getString(2);
+			if(Cid == null) {Cid = "null";}
+			else if(Sid == null) {Sid="null";}
+			
+			//출력 형식 지정
+			String value = "Section_ID : " + Sid + ", Course_ID : " + Cid +"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//right end
+
+
+
+
+//Ex2
+private void Ex2query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("SELECT ID, NAME, count(semester) as '강의 수' From inst_course group by ID, NAME"); //쿼리 수정 필요
+		
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("실습2  교수 ID, 성명, 강의 수 출력 ...\n"); //안내문구 출력
+		
+		
+		/////////////////////////////
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			int id = result.getInt(1);
+			String name = result.getString(2);
+			int course = result.getInt(3);
+
+			//출력 형식 지정
+			String value = "교수ID: " +id + ", 교수 명: " + name +", 개설 강의 수: "+course+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex2 end
+
+
+
+//Ex3
+private void Ex3query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("Select * From courseData Where years=2010 and semester = 'Spring' and dept_name = 'Comp_Sci'"); 
+
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("실습3: 2010년 봄에 열린 Comp.Sci 학과의 수업 출력 ...\n"); //안내문구 출력
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			String cos_id = result.getString(1);
+			String title = result.getString(2);
+			String dept_n = result.getString(3);
+			String semester = result.getString(4);
+			int years = result.getInt(5);
+			String build = result.getString(6);
+			int roomnum = result.getInt(7);
+
+			//출력 형식 지정
+			String value = "Course_id: " +cos_id + ", title: " + title +", dept_n: "+ dept_n +", semester: "+semester+", year: "+years+", building: "+build+"room_number: "+roomnum+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex3 end
+
+
+
+//Ex4
+private void Ex4query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("Select * From greadAvg"); 
+		
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("실습4: 학생별 이수 학점 평균 ...\n"); //안내문구 출력
+		
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			String id = result.getString(1);
+			double avg = result.getDouble(2);
+
+			//출력 형식 지정
+			String value = "ID : " +id + ", avg : " + avg+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex4 end
+
+
+
+
+//Ex5 과제1_1
+private void Ex5query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("select title from course where dept_name = 'Comp_Sci' and credits = 3"); 
+	
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("과제1_1: 컴공 3학점 수업 이름 출력 ...\n"); //안내문구 출력
+		
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			String title = result.getString(1);
+
+			//출력 형식 지정
+			String value = "Title :" +title+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex5 end
+
+
+
+//Ex6 과제1_2
+private void Ex6query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("Select t.ID from instructor i left outer join course c on i.dept_name =c.dept_name right outer join takes t on c.course_id = t.course_id where i.NAME = 'Einstein'"); 
+		
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("과제1_2: Einstein 교수의 수업을 듣는 학생의 ID 출력 ...\n"); //안내문구 출력
+		
+
+		while(result.next()) //순차로 읽어들임
+		{
+			//getstring의 번호 값의 열 데이터를 저장
+			int id = result.getInt(1);
+
+			//출력 형식 지정
+			String value = "ID : " +id+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		}
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex6 end
+
+
+
+//Ex7 과제1_3
+private void Ex7query() {
+	//커넥션, 스테이트먼트 객체 초기화
+	Connection con = null;
+	Statement stmt = null;
+
+
+	try {
+
+		//드라이버매니저가 접속에 필요한 인자 전달
+		con = DriverManager.getConnection(url, user, pass);
+		con.setCatalog("20155204"); //DBNAME 입력(최상위 테이블 묶음)
+
+		//stmt객체 선언
+		stmt = con.createStatement();
+
+		//result에 쿼리 실행 결과 전달
+		ResultSet result = stmt.executeQuery("select distinct t.* From instructor as t, instructor as r Where t.Salary > r.Salary Order by Salary desc"); 
+		// 하나의 테이블을 복제 카티젼 곱 한 뒤  양측의 급여를 비교하여 내림차순으로 나열 후 출력 부에서 최상위 행 하나만 출력하여 추려냄
+
+		//텍스트 필드 초기화
+		String count = Area.getText();
+		int c = count.length();
+		Area.replaceText(" ", 0, c);
+		Area.setText("과제1_3: 가장 높은 급여를 받는 교수 산출 ...\n"); //안내문구 출력
+		
+
+			result.next(); //순차로 읽어들임
+		
+			//getstring의 번호 값의 열 데이터를 저장
+			int id = result.getInt(1);
+			String name = result.getString(2);
+			String dept = result.getString(3);
+			int salary = result.getInt(4);
+
+			//출력 형식 지정
+			String value = "ID: " +id + ", NAME: " +name+", Dept_name: "+dept+", Salary: "+salary+"\n";
+			int index = Area.getText().length();
+			Area.insertText(value, index);
+		
+		//작업 종료 후 객체 닫기(자원확보)
+		con.close();
+		stmt.close();
+		}
+	catch(Exception ee) {System.out.println(ee);}
+	}//Ex7 end
+
+
+}//applet 객체 end
