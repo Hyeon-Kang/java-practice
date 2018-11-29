@@ -1,0 +1,132 @@
+/*
+	[실습 #18]학생성적처리 프로그램 작성 
+1)학생(Student) 클래스
+(1)인스턴스 멤버변수 
+   no : 학번, stNO를 이용하여 101번부터 부여, 내부전용
+   report, midScore, finalScore :  레포트점수, 중간점수, 기말점수, 내부전용
+(2)클래스(정적) 멤버변수 
+    MAX : 최대점수  상수
+    stNO : 학번을 만들기 위한 번호부여 변수
+(3)생성자
+  (3-1)매개변수 없는 생성자 :  초기값을 0으로 하여 다른 생성자 호출 
+  (3-2)레포트점수, 중간점수, 기말점수를 매개변수로 하는 생성자 : 각 점수는 0~MAX사이의 점수만 허용, 범위를 벗어나면 범위오류 메시지 출력 후  0으로 처리
+(4)인스턴스 메소드 
+  (4-1) getAVG() : 평균을 계산하여 반환하는 함수
+  (4-2) getGrade() : 학점을 계산하여 반환하는  함수
+      (평균 >= 90 : A, 90>평균>=80:B, 80>평균>=70:C,  70>평균>=60:D,   평균<60:F) 
+  (4-3)toString() : 학번, 레포트점수, 중간점수, 기말점수, 평균, 학점을 문자열로 연결하여 반환, 외부클래스접근가능 
+(5)클래스(정적)  메소드 
+(5-1)createStudent()메소드 : 레포트점수, 중간점수, 기말점수를  매개변수로 받아서 학생객체를 생성하여 반환, 외부클래스접근가능
+
+2. 학생클래스 테스트 객체 (StudentTest)
+(1)main() 메소드
+  (1-1)Student 객체 2개생성 (s1=매개변수 없는 생성자 이용, s2 =매개변수 3개인 생성자 이용)
+  (1-2)생성된 객체의 값 확인 : System.out.println(s1),  System.out.println(s2)
+  (1-3)Student 클래스의 createStudent()메소드를 사용하여 만들어진 Student 객체를 출력
+  (1-4)Student 객체를 3개 생성하여 slist배열에 저장
+  (1-5)foreach문을 사용하여 배열 출력
+*/
+
+
+
+class student{
+	private int no;
+	private double report, midScore, finalScore=0;
+	static final int MAX = 100;
+	static int stNO=101;
+	
+	
+	public student() {
+		setNum();
+		setScore();	
+	}
+	
+	public student(double a, double b, double c) {
+		setNum();
+		setScore(a,b,c);
+	}
+	
+	public void setNum() {
+		no = stNO;
+		stNO++;
+	}
+	
+	public void setScore() {
+		report =0;
+		midScore =0;
+		finalScore =0;
+	
+	}
+	
+	public void setScore(double a, double b, double c) {
+		if(a>=0 || a<=MAX)
+		report=a;
+		else {
+			System.out.println("범위오류.");
+			a=0;
+		}
+
+		if(b>=0 || b<=MAX)
+		midScore=b;
+		else {
+			System.out.println("범위오류.");
+			b=0;
+		}
+		
+		if(c>=0 || c<=MAX)
+		finalScore=c;
+		else {
+			System.out.println("범위오류.");
+			c=0;
+		}
+		
+	}//setScore end
+	
+	public double getAVG() {
+		double avg =(this.report+this.midScore+this.finalScore)/3;
+		return avg;
+	}
+	
+	public char getGrade() {
+		char grade;
+		double n = this.getAVG();
+		if(n>=90) {grade = 'A';}
+		else if(90>n && n>=80){grade = 'B';}
+		else if(80>n && n>=70){grade = 'C';}
+		else if(70>n && n>=60){grade = 'D';}
+		else {grade = 'F';}
+		return grade;
+	}
+	
+	public String toString() {
+		return "학번:"+no+", 레포트 점수:"+report+", 중간점수:"+midScore+", 기말점수:"+finalScore+", 평균:"+this.getAVG()+", 학점:"+this.getGrade();
+	}
+	
+	public static student createStudent(double repo, double mid, double  fin) {
+		return new student(repo, mid, fin);
+	}
+}//student end
+	
+public class stud {
+
+	public static void main(String []args) {
+		student s1  = new student();
+		student s2 = new student(90, 80, 70);
+		System.out.println(s1);
+		System.out.println(s2);
+
+		student s3 = student.createStudent(88, 79, 91);
+		System.out.println(s3);
+		
+		
+		student []slist = new student[3];
+		slist[0]= new student(50,60,70);
+		slist[1]= new student(10,20,30);
+		slist[2]= new student(57,98,66);
+		for(student a:slist) {
+			System.out.println(a);
+		}
+	}//main end
+	
+	
+}
