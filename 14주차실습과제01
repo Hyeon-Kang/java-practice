@@ -1,0 +1,46 @@
+import java.sql.Date;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Ex0001 {
+	public static void main(String []args) {
+		Scanner scan = new Scanner(System.in);
+		String id, fr = null, en;
+		while(true) {
+			
+			System.out.println("주민번호 입력.");
+			id = scan.next();
+			
+			//문자열 parsing
+			StringTokenizer tk = new StringTokenizer(id, "-");
+			if(tk.hasMoreTokens()) {
+				fr = tk.nextToken();
+				en = tk.nextToken();
+			}
+			else {}
+			
+			Data date = new 
+			DecimalFormat df = new DecimalFormat(fr.toString());
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+			LocalDate birthDate = LocalDate.parse((CharSequence) df, dtf);
+			String text = birthDate.format(dtf);
+			System.out.println(fr.toString());
+			System.out.println(text);
+			
+		}//while end
+		
+		
+	}
+}
+/*
+ * 1. 주민번호 입력 ㅁ
+ * 2. 앞부분 생년월일 추출 ㅁ
+ * 3. 추출한 문자열을 날짜 형식으로 변환 (어떻게?) 
+ * 4. 원하는 출력 형식에 맞춰 변환
+ * 5. 요일 추가
+ * 
+ * 
+ * */
