@@ -1,0 +1,20 @@
+//문자열 다루기
+public class aasdfs {
+	public static void main(String []args) {
+		Integer m = new Integer(100);
+		m = new Integer(m.intValue()+1);
+		System.out.println("m => " +m);
+		
+		Integer n = 200;
+		int i = n;
+		n = n +1;
+		System.out.println("n => " + n + ", i=>"+i );
+		System.out.println("n의 2진수 => " + n.toBinaryString(n));
+		System.out.println("n의 8진수 => " + n.toOctalString(n));
+		System.out.println("n의 16진수 => " + n.toHexString(n));
+		
+		Integer b = Integer.parseInt("11");
+		int c = 11;
+		System.out.println("b.equals(c) = "+b.equals(c)); 
+	}
+}
