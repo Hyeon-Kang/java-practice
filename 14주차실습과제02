@@ -1,0 +1,26 @@
+
+import java.time.*;
+
+public class chrst {
+
+	public static void main(String []args) {
+		//현재 날짜 정보 추출
+		LocalDate now = LocalDate.now();
+		System.out.println("현재 날짜 : " + now);
+		
+		//올해 년도 추출
+		int nowYear = now.getYear();
+		
+		//크리스마스 날짜 산출
+		LocalDate christ = LocalDate.of(nowYear, 12, 25);
+		
+		//비교 날짜 함수
+		Period dif = now.until(christ);
+		dif.getYears();
+		dif.getMonths();
+		dif.getDays();
+		
+		System.out.println("올해 크리스마스는 얼마나 남았을까?");
+		System.out.println(dif.getMonths()+"월 "+dif.getDays()+ "일 만큼 남았습니다.");
+	}
+}
