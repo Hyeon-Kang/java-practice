@@ -1,46 +1,97 @@
-import java.sql.Date;
+
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import javafx.scene.chart.PieChart.Data;
 
-public class Ex0001 {
+public class eee1 {
+	static String fr, en, year, month, day, sext;
+	
 	public static void main(String []args) {
 		Scanner scan = new Scanner(System.in);
-		String id, fr = null, en;
 		while(true) {
 			
 			System.out.println("주민번호 입력.");
-			id = scan.next();
+			String id = scan.next();
 			
-			//문자열 parsing
-			StringTokenizer tk = new StringTokenizer(id, "-");
-			if(tk.hasMoreTokens()) {
-				fr = tk.nextToken();
-				en = tk.nextToken();
-			}
-			else {}
+			//Identify number split
+			parse(id);
 			
-			Data date = new 
-			DecimalFormat df = new DecimalFormat(fr.toString());
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-			LocalDate birthDate = LocalDate.parse((CharSequence) df, dtf);
-			String text = birthDate.format(dtf);
-			System.out.println(fr.toString());
+			
+			//출생 요일 산출
+			LocalDate targetD = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+			String week = weekOut(targetD.getDayOfWeek().toString());
+			
+			
+			//출력양식
+			String text = "주민번호 : "+id+"\n생년월일 : "+ year +"년 "+ month + "월 "+ day + "일 "+ week + "요일," +" 성별 :"+ sext;
 			System.out.println(text);
-			
+			System.out.println();
 		}//while end
 		
 		
 	}
+	
+	public static String weekOut(String n) {
+		String wee = null;
+		if(n.equals("MONDAY"))
+			wee = "월";
+		else if(n.equals("TUESDAY"))
+			wee = "화";
+		else if(n.equals("WEDNESDAY"))
+			wee = "수";
+		else if(n.equals("THURSDAY"))
+			wee = "목";
+		else if(n.equals("FRIDAY"))
+			wee = "금";
+		else if (n.equals("SATURDAY"))
+			wee = "토";
+		else wee="일";
+		
+		return wee;
+	}//week end
+	
+	
+	public static void parse(String num) {
+		//문자열 parsing
+		StringTokenizer tk = new StringTokenizer(num, "-");
+		if(tk.hasMoreTokens()) {
+			fr = tk.nextToken();
+			en = tk.nextToken();
+		}
+		else {System.out.println("입력 값이 없습니다.");}
+
+		year = fr.substring(0, 2);
+		if (Integer.parseInt(year)>20) { ///현재는 18년도 이므로 20 이상은 모두 1900년대 아니면 현재 년도 값을 받은 뒤 뒤의 2 자리만 추출해 비교하여도 될 듯 하다.
+			year = "19"+year;
+		}
+		else {year = "20"+year;}
+		month = fr.substring(2,4);
+		day =fr.substring(4,6);
+		
+		
+		int num1 = Integer.parseInt(year);
+		if(num1>=1900 && num1<2000)
+		{
+			int s = Integer.parseInt(en.substring(0,1));
+			if (s == 1) {
+				sext = "남자";
+			}
+			else sext = "여자";
+		}
+		else if (num1>=2000 && num1<3000)	{
+			int s = Integer.parseInt(en.substring(0,1));
+			if (s == 3) {
+				sext = "남자";
+			}
+			else sext = "여자";
+		}
+		else {System.out.println("뒷자리 오류");}
+		
+		
+	}//parse end
+	
 }
-/*
- * 1. 주민번호 입력 ㅁ
- * 2. 앞부분 생년월일 추출 ㅁ
- * 3. 추출한 문자열을 날짜 형식으로 변환 (어떻게?) 
- * 4. 원하는 출력 형식에 맞춰 변환
- * 5. 요일 추가
- * 
- * 
- * */
