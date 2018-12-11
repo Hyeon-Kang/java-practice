@@ -68,21 +68,24 @@ class Sub extends Super
 {
   int x2 = 1000;
 }
-public class IN00{
+public class InheritanceTest1{
    public static void main(String[] args) {
- Super s1 = new Super();
- System.out.println("s1.x1 = " + s1.x1);
- System.out.println("s1.x2 = " + s1.x2);
- //System.out.println("s1.y = " + s1.y); //y는 private 접근 제한자를 사용하므로 상속할 수 없다.
- System.out.println("s1.z = " + s1.z);
- s1.print();
- Sub s2 = new Sub();
- System.out.println("s2.x1 = " + s2.x1);
- System.out.println("s2.x2 = " + s2.x2);
- //System.out.println("s2.y = " + s2.y);//y는 private 접근 제한자를 사용하므로 상속할 수 없다.
- System.out.println("s2.z = " + s2.z);
- s2.print();
+ Super s1 = new Super(); // S1 클래스 생성
+ System.out.println("s1.x1 = " + s1.x1); // s1의 x1출력
+ System.out.println("s1.x2 = " + s1.x2); // s1의 x2출력
+ //System.out.println("s1.y = " + s1.y); //private 접근제한자 이므로 상속 불가
+ System.out.println("s1.z = " + s1.z); //Super 클래스의 static 변수 z 출력
+ s1.print(); // s1의 모든 정보 출력
+ 
+ Sub s2 = new Sub(); //부모클래스 Super로부터 확장한 Sub 클래스 s2 생성
+ System.out.println("s2.x1 = " + s2.x1); // s2클래스의 x1 출력
+ System.out.println("s2.x2 = " + s2.x2); // s2클래스의 x2 출력
+// System.out.println("s2.y = " + s2.y); //private 접근제한자 이므로 상속 불가
+ System.out.println("s2.z = " + s2.z); // s2클래스의 z출력
+ s2.print(); // s2클래스의 모든 정보 출력
    }
 }
+
+
 ================================================================
 4
