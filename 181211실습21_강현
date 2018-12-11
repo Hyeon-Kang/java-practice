@@ -89,3 +89,69 @@ public class InheritanceTest1{
 
 ================================================================
 4
+
+import java.text.*;
+class Shape{
+  protected  double  x;
+  protected  double  y;
+  protected  String type;
+ 
+  public Shape()
+  {
+    this("Shape",1,1);
+  }
+  public Shape(String type, double x, double y)
+  {
+    this.type = type;
+    this.x = x;    this.y = y;
+  }
+  public String toString()
+  {
+    return "type : " + type + " ("+ x + "," + y + ")";
+  }
+}
+class Circle extends Shape
+{
+  private double radius;
+  public Circle(double x, double y, double radius)
+  {
+    super("Circle", x, y);    // Shape의 기본 구조를 상속받아 사용
+    this.radius = radius;	  // Circle에서 추가되는 변수
+  }
+  public String toString()
+  {
+    DecimalFormat df=new DecimalFormat("###.##"); //출력 형태 지정
+    return super.toString() + " Radius : " + df.format(radius) + " Area : " + df.format (getArea());
+  }
+  public double getArea(){
+   return  radius * radius * Math.PI;
+  }
+}  
+class Rectangle extends Shape
+{
+  private double width;
+  private double height;
+  public Rectangle (double x, double y, double w, double h)
+  {
+    super("Rectangle", x, y);    // Shape로부터 상속받아 사용
+    this.width = w; // Rectangle에서 확장한(추가한) 변수
+    this.height = h; // Rectangle에서 확장한(추가한) 변수
+  }
+  public double getArea(){
+   return  width * height;
+  }
+  public String toString()
+  {
+    return super.toString() + " Width : " + width + " Height : " + height + " Area : " +  getArea();
+  }
+}  
+public class InheritanceTest2{
+   public static void main(String[] args){
+    Shape s = new Shape(); //Shape 클래스 s 생성
+        Circle c = new Circle(30, 40, 50); // Shape 확장 클래스 Circle c 생성 및 값 전달
+        Rectangle r = new Rectangle(60, 70, 100, 200); // Shape 확장 클래스 Rectangle r 생성 및 값 전달
+ System.out.println(s);  System.out.println(c);  System.out.println(r); //각 클래스 출력    
+     }
+}
+
+
