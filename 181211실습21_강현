@@ -1,0 +1,88 @@
+예제1
+
+	class Point { int x, y; }
+	class ColoredPoint extends Point { int color; }
+	final class Colored3dPoint extends ColoredPoint { int z; }
+
+	public class in_01{
+	   public static void main(String[] args) throws Exception{
+		Point p = new Point();
+		ColoredPoint cp = new ColoredPoint();
+		Colored3dPoint c3dp = new Colored3dPoint();
+		System.out.println("p.x = " + p.x);
+		System.out.println("cp.x = " + cp.x);
+		System.out.println("c3dp.x = " + c3dp.x);
+		//System.out.println("p.color = " + p.color); //compile error
+		System.out.println("c3dp.color = " + c3dp.color); 
+		System.out.println("c3dp.color = " + c3dp.z); 
+	   }
+	}
+
+
+
+==================================================================
+예제2
+
+class A {
+	 int aa = 1;
+	 private int bb = 10;  //상속 안 됨
+	 int cc = 2;
+	 public void print(){
+	    System.out.println("aa= " + aa + ",bb="+bb + ",cc="+cc);  
+	 }
+	}
+	class B extends A {
+	  int dd = 4;
+	}
+	class C extends B {
+	  int ee = 3;
+	  int aa = 10; // A에서 상속 받은 변수 aa 를 사용하지 못함(상위멤버 숨김)
+	}
+	class in_02 {
+	  public static void main(String[] args) {
+	    C objc = new C();
+	    System.out.println("objc객체 aa의 값은 "  + objc.aa);  //클래스 C에 정의된 aa  
+//	    System.out.println("objc객체 bb의 값은 "  + objc.bb); // private 이므로 상속 안됨(comlpile error) 
+	    System.out.println("objc객체 cc의 값은 "   + objc.cc); //클래스 A에서 상속  
+	    System.out.println("objc객체 dd의 값은 "   + objc.dd); //클래스 B에서 상속   
+	    System.out.println("objc객체 ee의 값은 "   + objc.ee); //클래스 C에 정의된 ee 
+	    objc.print();  //클래스 A에서 상속
+	  }
+	}
+
+
+======================================================================
+3
+
+class Super
+{
+  int x1=100;
+  int x2=200;
+  private int y=300;
+  static int z = 400;
+  void print(){
+    System.out.println("x1 = " + x1 + " x2 = " + x2 + " y = " + y + " z = "+ z);  
+  }
+}
+class Sub extends Super
+{
+  int x2 = 1000;
+}
+public class IN00{
+   public static void main(String[] args) {
+ Super s1 = new Super();
+ System.out.println("s1.x1 = " + s1.x1);
+ System.out.println("s1.x2 = " + s1.x2);
+ //System.out.println("s1.y = " + s1.y); //y는 private 접근 제한자를 사용하므로 상속할 수 없다.
+ System.out.println("s1.z = " + s1.z);
+ s1.print();
+ Sub s2 = new Sub();
+ System.out.println("s2.x1 = " + s2.x1);
+ System.out.println("s2.x2 = " + s2.x2);
+ //System.out.println("s2.y = " + s2.y);//y는 private 접근 제한자를 사용하므로 상속할 수 없다.
+ System.out.println("s2.z = " + s2.z);
+ s2.print();
+   }
+}
+================================================================
+4
