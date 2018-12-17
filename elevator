@@ -162,37 +162,46 @@ public class eve {
 		Ev.nowfloor = 1; // default 위치 1
 
 		while (true) {
+			//1. 엘리베이터 호출
 			Ev.calle();
 			Thread.sleep(1000);
 
+			//2. 문 열림
 			Ev.doorOpen();
 			Thread.sleep(1000);
 
+			//3. 현 위치 출력
 			Ev.printfloor(Ev.nowfloor);
 			Thread.sleep(1000);
 
+			//4. 층 수 선택 안내문 출력
 			Ev.printSelectFloor();
 			Thread.sleep(1000);
 
+			//5. 층 수 값 select에 저장
 			int select = Ev.SelectNum();
 
 //			Thread.sleep(1000);
 
+			//6. 입력한 select 연산
 			Ev.SelectFloor(select);
 			Thread.sleep(1000);
 
+			//7. 문 닫힘
 			Ev.doorClose();
 			Thread.sleep(1000);
 
+			//8. 도착 프로세스
 			Ev.beep();
 			Thread.sleep(1000);
 
+			//9. 문 열림
 			Ev.doorOpen();
 			Thread.sleep(1000);
 
+			//10. 문 닫힘
 			Ev.doorClose();
 			Thread.sleep(1000);
-
 		}
 
 	}// main end
