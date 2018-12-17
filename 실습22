@@ -1,0 +1,57 @@
+////////////////////////////////////////////////////////////////////////////
+(1)상속(Inheritance) ...(7) : 상위 클래스의 특성을 이어 받음
+(2)Method Overriding ...(6), (9), (10) : 하나의 메소드를 여러 형태로 재 정의하여 사용
+(3)UpCast ...(15), (18), (19) : 하위 객체를 상위 클래스의 형으로 변환하여 사용 (반대의 경우인 Downcast는 하위 객체만의 추가 정보 필요)
+(4)LateBinding ...
+(5)다형성(Polymorphism)
+////////////////////////////////////////////////////////////////////////////
+class Point {                   //(1)
+    int mx, my;                //(2)
+    public void add(int x, int y) { //(3)
+ mx += x;      
+ my += y;
+     }
+    public void add() {        //(4)       
+ mx++; 
+ my++;
+    }
+    public void display(){     //(5)       
+         System.out.println("x = " + mx + " y = " + my);
+    }
+    public String toString() {
+     return ("(" + mx + "," + my + ")");  //(6)  **overriding
+    }
+}
+class Point3D extends Point  { //(7)   **상속
+    private int mz;                 //(8)
+    public void add(){           //(9)         **overriding
+      mx++; 
+      my++; 
+      mz++;
+    }
+    public void display(){  //(10)  **overriding
+ System.out.println("x = " + mx + " y = " + my + " z = " + mz);
+    }
+    public String toString() {
+     return ("(" + mx + "," + my + + "," + mz + ")");  //(23)   **overriding
+    }
+}
+class PointTest {
+  public static void main (String args[]) {
+ Point p1 = new Point();    //(11) 
+ p1.add(10, 20);              //(12) 
+ p1.add();                      //(13) **polymorphism
+ p1.display();                 //(14) **polymorphism
+   
+ p1 = new Point3D();       //(15) **upcast
+ p1.add();                    //(16) **rate binding, **polymorphism
+ p1.display();                 //(17) **rate binding, **polymorphism
+
+ Point [] plist = {new Point(), new Point3D()};    //(18) **upcast
+ for(Point p:plist){            //(19) **upcast
+  p.add();           //(20)      ** polymorphism, late binding
+  p.display();       //(21)      ** polymorphism, late binding
+  System.out.println(p);   //(22)     **polymorphism, late binding
+            }
+     }
+}
