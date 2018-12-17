@@ -1,3 +1,4 @@
+package chap03;
 
 import java.util.*;
 
@@ -23,12 +24,12 @@ class Elevator {
 
 	// 3.현 위치 층수 출력
 	public void printfloor(int a) {
-		if (a - 5 > 0) {
-			System.out.println("현재 위치는" + (a - 5) + "층입니다.");
-		} else if (a - 5 == 0) {
+		if (a > 0) {
+			System.out.println("현재 위치는" + (a) + "층입니다.");
+		} else if (a == 0) {
 			System.out.println("현재 위치는 B1층입니다.");
 		} else {
-			int num = (-1) * (a - 5) + 1;
+			int num = (-1) * (a) + 1;
 			System.out.println("현재 위치는 B" + num + "층입니다.");
 		}
 	}// 층수 출력
@@ -58,15 +59,14 @@ class Elevator {
 	// 4.층 수 안내멘트
 	public void printSelectFloor() {
 		System.out.println("=====================");
-		System.out.println("0. 문 열림.");
-		System.out.println("1. 문 닫힘.");
-		System.out.println("2. B3층");
-		System.out.println("3. B2층");
-		System.out.println("4. B1층");
-		System.out.println("5. 1층");
-		System.out.println("6. 2층");
-		System.out.println("7. 3층");
-		System.out.println("8. 4층");
+		System.out.println("1. 문 열림.");
+		System.out.println("2. 문 닫힘.");
+		System.out.println("3. B3층");
+		System.out.println("4. B2층");
+		System.out.println("5. B1층");
+		System.out.println("6. 1층");
+		System.out.println("7. 2층");
+		System.out.println("8. 3층");
 		System.out.println("=====================");
 		System.out.println("이동할 층을 입력하세요.");
 	}// end printSelectFloor
@@ -75,6 +75,7 @@ class Elevator {
 	public int SelectNum() {
 		int num = scan.nextInt();
 		if (num < 0 || num > 8) {
+			System.out.println("범위 오류.");
 			return SelectNum();
 		} else {
 			return num;
@@ -83,14 +84,13 @@ class Elevator {
 
 	// 6. 층수 선택 반영
 	public void SelectFloor(int s) {
-		System.out.println("select floor test" + s);
+
 		do {
 			switch (s) {
 			/*
 			 * case 1: doorOpen(); break; case 2: doorClose(); break;
 			 */
 			case 3:
-				System.out.println("select floor switch test" + s);
 				targetfloor = -2;
 				target = "B3층 선택";
 				break;
@@ -114,29 +114,27 @@ class Elevator {
 				targetfloor = 3;
 				target = "3층 선택";
 				break;
-			case 9:
-				targetfloor = 4;
-				target = "4층 선택";
-				break;
+
 			default:
 				System.out.println("유효하지 않은 값 입니다.");
 			}
 			// 중복 시 멘트 출력
 			check(targetfloor);
 
-		} while (nowfloor != targetfloor); // 중복시 반복
+		} while (nowfloor == targetfloor); // 중복시 반복
 
 		// 선택 층 프린트
 		System.out.println(target);
-
+		nowfloor = targetfloor;
 	}// end Selectfloor
 
 	// 7.중복 검사 결과 멘트
-	public void check(int c) {
+	public int check(int c) {
 		if (c == this.nowfloor) {
-			System.out.println("현재 있는 층은 입력할 수 없습니다.");
-			printSelectFloor();
+			System.out.println("현재 있는 층은 갈 수 없습니다.");
+			return SelectNum();
 		} else {
+			return c;
 		}
 	}// end check
 
@@ -149,8 +147,7 @@ class Elevator {
 }// end Elevator
 
 /*
- * 1.호출 // 2.문 열림 3.현 위치 출력 4.층수 안내멘트 5.층 수 입력 6.입력 층 수 반영 7.중복 검사 check
- *  //6 처리중
+ * 1.호출 // 2.문 열림 3.현 위치 출력 4.층수 안내멘트 5.층 수 입력 6.입력 층 수 반영 7.중복 검사 check //6 처리중
  * 알아서 끌어다 씀 8.문 닫힘 9.도착 안내 멘트 10.문 열림 11.문 닫힘 이후 반복
  */
 
@@ -173,13 +170,12 @@ public class eve {
 
 			Ev.printfloor(Ev.nowfloor);
 			Thread.sleep(1000);
-			
+
 			Ev.printSelectFloor();
 			Thread.sleep(1000);
-			
-			System.out.println("실행");
+
 			int select = Ev.SelectNum();
-			System.out.println("실행");
+
 //			Thread.sleep(1000);
 
 			Ev.SelectFloor(select);
