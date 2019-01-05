@@ -1,5 +1,4 @@
 ///2dimension array practice
-///각 행의 크기가 
 public class array2test {
 
 	public static void main(String []args) {
